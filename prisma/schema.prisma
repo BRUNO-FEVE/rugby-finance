@@ -3,32 +3,36 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "cockroachdb"
   url      = env("DATABASE_URL")
 }
 
 model Adm {
   id       String @unique @default(uuid())
   name     String
-  rg       String
+  rg       Int @unique
   area     String
-  email    String
-  password String
+  email    String @unique
+  password String @unique
 }
 
 model Member {
   id                    String @unique @default(uuid())
+  email                 String @unique
   name                  String
   nickName              String
-  cpf                   Int
-  rg                    Int
+  cpf                   Int @unique
+  rg                    Int @unique
   educationInstituition String
-  ra                    Int
+  ra                    Int @unique
   course                String
   yearOfGraduation      Int
-  phoneNumber           Int
+  phoneNumber           Int @unique
   yearOfBirth           Int
-  instagram             String
+  instagram             String @unique
   lawsLink              String
   readyLink             String
+  team                  String
+  shirtSize             String
+  shirtNumber           Int?
 }

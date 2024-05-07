@@ -1,12 +1,39 @@
 "use client";
 
-import TextField from "@/components/text-field";
+import { useForm, UseFormReturn } from "react-hook-form";
+import * as z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoginSchemma } from "@/schemas";
 import { Button } from "@/components/ui/button";
-import { prisma } from "@/lib/prisma";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import React from "react";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { login } from "@/actions/login";
+import { useTransition } from "react";
 
 export default function SignIn() {
+  const [isPeding, startTransition] = useTransition();
+
+  const form = useForm<z.infer<typeof LoginSchemma>>({
+    resolver: zodResolver(LoginSchemma),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  const onSubmit = (values: z.infer<typeof LoginSchemma>) => {
+    startTransition(() => {
+      login(values);
+    });
+  };
+
   return (
     <div className="w-full md:w-1/2 h-screen flex items-center justify-center">
       <div className="w-4/6 flex flex-col gap-3">
@@ -18,13 +45,60 @@ export default function SignIn() {
           Plataforma criada pela comissão do Rugby Mauá para o gerenciamento de
           pagamentos de seus membros, incluindo eventuais cobranças.
         </p>
-        <form action="" className="pt-20 flex flex-col gap-10">
-          <div className="flex flex-col gap-6">
-            <TextField name="email" label={"Email"} />
-            <TextField name="password" label={"Senha"} />
-          </div>
-          <Button variant={"secondary"}>Login</Button>
-        </form>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="pt-20 flex flex-col gap-10"
+          >
+            <div className="flex flex-col gap-6">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-primary-foreground">
+                      Email
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        disabled={isPeding}
+                        className="bg-primary text-primary-foreground"
+                        placeholder="exemplo@email.com"
+                        type="email"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-red-500" />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-primary-foreground">
+                      Senha
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        disabled={isPeding}
+                        className="bg-primary text-primary-foreground"
+                        placeholder="*******"
+                        type="password"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-red-500" />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <Button disabled={isPeding} type="submit" variant={"secondary"}>
+              Login
+            </Button>
+          </form>
+        </Form>
       </div>
     </div>
   );

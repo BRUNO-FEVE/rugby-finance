@@ -2,7 +2,7 @@
 
 import SidePicture from "@/components/side-picture";
 import { Button } from "@/components/ui/button";
-import { LucideProps, Moon, Sun } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { ReactNode, useEffect, useState } from "react";
 

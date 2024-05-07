@@ -20,8 +20,8 @@ export default function SignIn() {
         </p>
         <form action="" className="pt-20 flex flex-col gap-10">
           <div className="flex flex-col gap-6">
-            <TextField label={"Email"} />
-            <TextField label={"Senha"} />
+            <TextField name="email" label={"Email"} />
+            <TextField name="password" label={"Senha"} />
           </div>
           <Button variant={"secondary"}>Login</Button>
         </form>

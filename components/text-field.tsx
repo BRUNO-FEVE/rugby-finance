@@ -1,10 +1,11 @@
+import { InputHTMLAttributes } from "react";
 import { Input } from "./ui/input";
 
-interface TextFieldProps {
+interface TextFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
 }
 
-export default function TextField({ label }: TextFieldProps) {
+export default function TextField({ label, ...props }: TextFieldProps) {
   const LABEL = label.toLowerCase();
   return (
     <div className="flex flex-col gap-2">
@@ -13,6 +14,7 @@ export default function TextField({ label }: TextFieldProps) {
         className="bg-primary text-primary-foreground"
         type={LABEL === "senha" ? "password" : LABEL}
         placeholder={`Digite seu ${LABEL}...`}
+        {...props}
       />
     </div>
   );

@@ -1,3 +1,5 @@
+// https://www.youtube.com/watch?v=1MTyCvS05V4
+
 import NextAuth from "next-auth";
 import authConfig from "./auth.config";
 import {
@@ -6,15 +8,12 @@ import {
   authRoutes,
   publicRoutes,
 } from "./routes";
-import next from "next";
 
 const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
-  // console.log(nextUrl);
-  // console.log(isLoggedIn);
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
@@ -35,9 +34,6 @@ export default auth((req) => {
 
   return;
 });
-
-// 2:23 hour
-// https://www.youtube.com/watch?v=1MTyCvS05V4
 
 export const config = {
   matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],

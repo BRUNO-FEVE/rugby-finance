@@ -3,7 +3,6 @@
 import TextField from "@/components/text-field";
 import { Button } from "@/components/ui/button";
 import { prisma } from "@/lib/prisma";
-import { Adm } from "@prisma/client";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import React from "react";
 

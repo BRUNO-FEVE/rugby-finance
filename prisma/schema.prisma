@@ -44,13 +44,13 @@ model Member {
   email                 String @unique
   name                  String
   nickName              String
-  cpf                   Int @unique
+  cpf                   BigInt @unique
   rg                    Int @unique
   educationInstituition String
   ra                    Int @unique
   course                String
   yearOfGraduation      Int
-  phoneNumber           Int @unique
+  phoneNumber           BigInt @unique
   yearOfBirth           Int
   instagram             String @unique
   lawsLink              String
@@ -58,4 +58,6 @@ model Member {
   team                  String
   shirtSize             String
   shirtNumber           Int?
+
+  @@map("members")
 }

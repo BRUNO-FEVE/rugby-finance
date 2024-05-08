@@ -10,7 +10,8 @@
     "lint:check": "prettier --check .",
     "lint:fix": "prettier --write .",
     "test": "jest",
-    "prisma:seed": "tsx ./prisma/seed"
+    "prisma:seed:adm": "tsx ./prisma/seed-adm",
+    "prisma:seed:member": "tsx ./prisma/seed-member"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.0.0",

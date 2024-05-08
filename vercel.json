@@ -1,5 +1,0 @@
-{
-  "build": {
-    "postinstall": "prisma gernerate && npm run dev"
-  }
-}

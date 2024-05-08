@@ -1,4 +1,4 @@
-import { members } from "./migration-json/members";
+import { members } from "./seed-json/members";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();

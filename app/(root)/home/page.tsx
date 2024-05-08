@@ -1,5 +1,7 @@
+import { auth } from "@/auth";
 import React from "react";
 
-export default function Home() {
-  return <div>Home</div>;
+export default async function Home() {
+  const session = await auth();
+  return <div>{JSON.stringify(session)}</div>;
 }

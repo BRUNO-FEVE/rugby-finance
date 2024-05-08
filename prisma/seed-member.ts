@@ -1,3 +1,4 @@
+import { members } from "./migration-json/members";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -5,28 +6,29 @@ const prisma = new PrismaClient();
 async function main() {
   await prisma.member.deleteMany();
 
-  await prisma.member.createMany({
-    data: [
-      {
-        email: "joao@example.com",
-        name: "João Silva",
-        nickName: "joaosilva",
-        cpf: 12345678900,
-        rg: 987654321,
-        educationInstituition: "Universidade Federal",
-        ra: 123456,
-        course: "Direito",
-        yearOfGraduation: 2023,
-        phoneNumber: 5511999999999,
-        yearOfBirth: 1995,
-        instagram: "joaosilva",
-        lawsLink: "https://example.com/laws",
-        readyLink: "https://example.com/ready",
-        team: "Team A",
-        shirtSize: "M",
-        shirtNumber: 10,
+  members.map(async (member) => {
+    await prisma.member.create({
+      data: {
+        email: member.email,
+        name: member.name,
+        nickName: member.nickName,
+        cpf: member.cpf,
+        rg: member.rg,
+        educationInstituition: member.educationInstituition,
+        ra: member.ra,
+        course: member.course,
+        yearOfGraduation: member.yearOfGraduation,
+        phoneNumber: member.phoneNumber,
+        yearOfBirth: member.yearOfBirth,
+        yearOfJoinOnRugbyMaua: member.yearOfJoinOnRugbyMaua,
+        instagram: member.instagram,
+        lawsLink: member.lawsLink,
+        readyLink: member.readyLink,
+        team: member.team,
+        uniformSize: member.uniformSize,
+        uniformNumber: member.uniformNumber,
       },
-    ],
+    });
   });
 }
 

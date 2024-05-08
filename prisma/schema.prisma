@@ -47,17 +47,18 @@ model Member {
   cpf                   BigInt @unique
   rg                    Int @unique
   educationInstituition String
-  ra                    Int @unique
+  ra                    Int? @unique
   course                String
   yearOfGraduation      Int
   phoneNumber           BigInt @unique
-  yearOfBirth           Int
+  yearOfBirth           String
+  yearOfJoinOnRugbyMaua Int
   instagram             String @unique
   lawsLink              String
   readyLink             String
   team                  String
-  shirtSize             String
-  shirtNumber           Int?
+  uniformSize           String
+  uniformNumber         Int?
 
   @@map("members")
 }

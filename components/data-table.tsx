@@ -8,6 +8,9 @@ import {
   useReactTable,
   getSortedRowModel,
   getPaginationRowModel,
+  ColumnFilter,
+  ColumnFiltersState,
+  getFilteredRowModel,
 } from "@tanstack/react-table";
 
 import {
@@ -19,6 +22,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 import { useState } from "react";
 
 interface DataTableProps<TData, TValue> {
@@ -31,21 +35,36 @@ export default function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSortiing] = useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onColumnFiltersChange: setColumnFilters,
     onSortingChange: setSortiing,
     getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     state: {
       sorting,
+      columnFilters,
     },
   });
 
   return (
     <div>
+      <div className="flex items-center py-4">
+        <Input
+          placeholder="Pesquisar membro..."
+          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          onChange={(event) => {
+            table.getColumn("name")?.setFilterValue(event.target.value);
+            table.getColumn("name")?.setFilterValue(event.target.value);
+          }}
+          className="max-w-sm"
+        ></Input>
+      </div>
       <div className="rounded-md border h-fit">
         <Table>
           <TableHeader>

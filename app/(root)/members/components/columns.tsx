@@ -1,13 +1,26 @@
 "use client";
 
 import Tag from "@/components/tag";
+import { Button } from "@/components/ui/button";
 import { Member } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown } from "lucide-react";
 
 export const columns: ColumnDef<Member>[] = [
   {
     accessorKey: "name",
-    header: "Nome",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant={"ghost"}
+          onClick={() => {
+            column.toggleSorting(column.getIsSorted() === "asc");
+          }}
+        >
+          Nome <ArrowUpDown className="w-4 h-4 ml-2" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const IS_BIXO =
         row.original.yearOfJoinOnRugbyMaua > new Date().getFullYear() - 1;
@@ -39,7 +52,9 @@ export const columns: ColumnDef<Member>[] = [
   },
   {
     accessorKey: "email",
-    header: "Email",
+    header: ({ column }) => {
+      return <Button variant={"ghost"}>Email</Button>;
+    },
   },
   {
     accessorKey: "phoneNumber",

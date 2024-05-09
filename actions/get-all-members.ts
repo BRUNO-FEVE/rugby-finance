@@ -1,18 +1,20 @@
 "use server";
 
+import { MemberDataTable } from "@/app/(root)/members/components/columns";
 import { prisma } from "@/lib/prisma";
 import { Member } from "@prisma/client";
 
 export const getAllMembers = async () => {
   try {
-    const members: Member[] = await prisma.member.findMany();
+    const response: Member[] = await prisma.member.findMany();
 
-    if (!members || members.length === 0) {
+    if (!response || response.length === 0) {
       throw new Error("Error on get all members!");
     }
 
-    return members;
+    return response;
   } catch (error) {
     console.log("Error: " + error);
+    throw error;
   }
 };

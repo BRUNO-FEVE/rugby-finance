@@ -1,5 +1,65 @@
-import React from "react";
+"use server";
 
-export default function MembersPage() {
-  return <div>MembersPage</div>;
+import React from "react";
+import { getAllMembers } from "@/actions/get-all-members";
+import DataTable from "@/components/data-table";
+import { columns } from "./components/columns";
+import { Member } from "@prisma/client";
+
+export default async function MembersPage() {
+  // const response = await getAllMembers();
+  const response: Member[] = [
+    {
+      id: "1",
+      email: "john@example.com",
+      name: "John Doe",
+      nickName: "JD",
+      cpf: BigInt(12345678900),
+      rg: 1234567,
+      educationInstituition: "Example University",
+      ra: 98765,
+      course: "Computer Science",
+      yearOfGraduation: 2023,
+      phoneNumber: BigInt(98765432100),
+      yearOfBirth: "1995",
+      yearOfJoinOnRugbyMaua: 2020,
+      instagram: "@johndoe",
+      lawsLink: "https://example.com/laws",
+      readyLink: "https://example.com/ready",
+      team: "Rugby Maua",
+      uniformSize: "L",
+      uniformNumber: 10,
+    },
+  ];
+
+  // const members: MemberDataTable[] = [];
+
+  // response.map((responseMember) => {
+  //   const IS_BIXO =
+  //     responseMember.yearOfJoinOnRugbyMaua < new Date().getFullYear() - 1;
+
+  //   const IS_TEAM_MASC = responseMember.team === "Masculino";
+
+  //   members.push({
+  //     name: responseMember.name + ` (${responseMember.nickName})`,
+  //     email: responseMember.email,
+  //     phoneNumber: responseMember.phoneNumber,
+  //     hierarchy: IS_BIXO ? "BIXO" : "Veterano",
+  //     team: IS_TEAM_MASC ? "Masculino" : "Feminino",
+  //   });
+  // });
+
+  if (response) {
+    return (
+      <div className="w-full h-full flex flex-col gap-10 p-10">
+        <div className="h-1/5 flex flex-col justify-center pl-20">
+          <h1 className="font-bold text-4xl">Membros</h1>
+          <p className="text-muted-foreground font-light">
+            Aqui estão todos membros ativos do Rugby Mauá!
+          </p>
+        </div>
+        <DataTable columns={columns} data={response} />
+      </div>
+    );
+  }
 }

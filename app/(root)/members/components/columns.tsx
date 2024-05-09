@@ -8,22 +8,29 @@ export const columns: ColumnDef<Member>[] = [
   {
     accessorKey: "name",
     header: "Nome",
+    cell: ({ row }) => {
+      const IS_BIXO =
+        row.original.yearOfJoinOnRugbyMaua > new Date().getFullYear() - 1;
+
+      return (
+        <div className="flex flex-row gap-2 items-center">
+          <p>
+            {row.original.name}{" "}
+            <span className="text-muted-foreground">
+              ({row.original.nickName})
+            </span>
+          </p>
+        </div>
+      );
+    },
   },
   {
     accessorKey: "yearOfJoinOnRugbyMaua",
-    header: () => (
-      <div className="text-center">
-        <p>Hierarquia</p>
-      </div>
-    ),
+    header: "",
     cell: ({ row }) => {
       const IS_BIXO =
-        row.original.yearOfJoinOnRugbyMaua < new Date().getFullYear() - 1;
-      return (
-        <div className="w-full flex justify-center">
-          <Tag label={IS_BIXO ? "BIXO" : "VETERANO"} />
-        </div>
-      );
+        row.original.yearOfJoinOnRugbyMaua > new Date().getFullYear() - 1;
+      return <Tag label={IS_BIXO ? "BIXO" : "VETERANO"} />;
     },
   },
   {

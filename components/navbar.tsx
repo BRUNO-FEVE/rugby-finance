@@ -4,8 +4,8 @@ import { Combobox, ItensProps } from "./ui/combobox";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { deleteCookie } from "@/actions/delete-cookie";
 import { useTheme } from "next-themes";
-import { Laptop2Icon, Moon, Sun } from "lucide-react";
-import { auth } from "@/auth";
+import { Landmark, Laptop2Icon, Moon, Sun } from "lucide-react";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,6 +18,10 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { Button } from "./ui/button";
+import { useRouter } from "next/dist/client/router";
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 const teams: ItensProps[] = [
   {
@@ -41,6 +45,7 @@ interface NavbarProps {
 
 export default function Navbar({ name, email }: NavbarProps) {
   const { setTheme } = useTheme();
+  const pathName = usePathname();
 
   const handleLogOut = async () => {
     await deleteCookie("authjs.callback-url");
@@ -50,9 +55,43 @@ export default function Navbar({ name, email }: NavbarProps) {
     window.location.href = "/sign-in";
   };
 
+  useEffect(() => {
+    console.log(pathName);
+  }, []);
+
   return (
     <div className="w-full py-3 px-5 border-b border-muted flex flex-row justify-between items-center">
-      <Combobox data={teams} />
+      <div className="space-x-3 flex items-center">
+        {/* <Combobox data={teams} /> */}
+        <h1 className="pr-10 flex items-center gap-3">
+          <Landmark strokeWidth={2} className="text-primary w-5" />
+          Rugby Finance
+        </h1>
+        <Button
+          variant={"ghost"}
+          className={
+            pathName === "/rugby-payment" ? undefined : "text-muted-foreground"
+          }
+        >
+          Mensalidades
+        </Button>
+        <Button
+          variant={"ghost"}
+          className={
+            pathName === "/members" ? undefined : "text-muted-foreground"
+          }
+        >
+          Membros
+        </Button>
+        <Button
+          variant={"ghost"}
+          className={
+            pathName === "/payments" ? undefined : "text-muted-foreground"
+          }
+        >
+          Pagamentos
+        </Button>
+      </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Avatar>

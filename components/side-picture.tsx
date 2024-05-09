@@ -7,7 +7,7 @@ export default function SidePicture() {
     >
       <div className="flex flex-row gap-2 p-5 items-center w-full text-primary">
         <Landmark strokeWidth={2} className="text-white" />
-        <h1 className="font-bold text-white">Rugby Mauá Finance</h1>
+        <h1 className="text-white">Rugby Mauá Finance</h1>
       </div>
     </div>
   );

@@ -44,5 +44,15 @@ export const columns: ColumnDef<Member>[] = [
   {
     accessorKey: "phoneNumber",
     header: "Telefone",
+    cell: ({ row }) => {
+      const PHONE_STRING = row.original.phoneNumber.toString();
+
+      return (
+        <p>
+          ({PHONE_STRING.slice(0, 2)}) {PHONE_STRING.slice(2, 7)}-
+          {PHONE_STRING.slice(7)}
+        </p>
+      );
+    },
   },
 ];

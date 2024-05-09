@@ -55,10 +55,6 @@ export default function Navbar({ name, email }: NavbarProps) {
     window.location.href = "/sign-in";
   };
 
-  useEffect(() => {
-    console.log(pathName);
-  }, []);
-
   return (
     <div className="w-full py-3 px-5 border-b border-muted flex flex-row justify-between items-center">
       <div className="space-x-3 flex items-center">

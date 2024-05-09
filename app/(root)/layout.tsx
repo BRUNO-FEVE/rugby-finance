@@ -9,11 +9,7 @@ export default async function RootLayout({
   if (session?.user) {
     return (
       <main className="bg-background text-primary h-screen w-screen">
-        <Navbar
-          name={session.user.name}
-          email={session.user.email}
-          currentPage={"testes"}
-        />
+        <Navbar name={session.user.name} email={session.user.email} />
         {children}
       </main>
     );

@@ -1,6 +1,5 @@
 "use server";
 
-import { MemberDataTable } from "@/app/(root)/members/components/columns";
 import { prisma } from "@/lib/prisma";
 import { Member } from "@prisma/client";
 

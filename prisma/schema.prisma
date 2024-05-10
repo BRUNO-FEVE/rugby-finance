@@ -62,17 +62,20 @@ model Member {
   RugbyPayment          RugbyPayment? 
 
   @@map("members")
+  @@unique([id, name])
 }
 
 model RugbyPayment {
   id            String @unique @default(uuid())
   memberId      String @unique
+  memberName    String 
   monthsPayment Int[]  @default([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   Payments      Payment[]
 
-  member  Member   @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  member  Member   @relation(fields: [memberId, memberName], references: [id, name], onDelete: Cascade)
 
   @@map("rugby_payment")
+  @@unique([memberId, memberName])
 }
 
 model Payment {

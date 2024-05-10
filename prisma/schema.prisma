@@ -62,20 +62,21 @@ model Member {
   RugbyPayment          RugbyPayment? 
 
   @@map("members")
-  @@unique([id, name])
+  @@unique([id, name, nickName])
 }
 
 model RugbyPayment {
-  id            String @unique @default(uuid())
-  memberId      String @unique
-  memberName    String 
-  monthsPayment Int[]  @default([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-  Payments      Payment[]
+  id                String @unique @default(uuid())
+  memberId          String @unique
+  memberName        String 
+  memberNickName    String
+  monthsPayment     Int[]  @default([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+  Payments          Payment[]
 
-  member  Member   @relation(fields: [memberId, memberName], references: [id, name], onDelete: Cascade)
+  member  Member    @relation(fields: [memberId, memberName, memberNickName], references: [id, name, nickName], onDelete: Cascade)
 
   @@map("rugby_payment")
-  @@unique([memberId, memberName])
+  @@unique([memberId, memberName, memberNickName])
 }
 
 model Payment {

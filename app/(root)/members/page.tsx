@@ -2,9 +2,8 @@
 
 import React from "react";
 import { getAllMembers } from "@/actions/get-all-members";
-import DataTable from "@/app/(root)/members/components/data-table";
 import { columns } from "./components/columns";
-import { Member } from "@prisma/client";
+import MembersDataTable from "@/app/(root)/members/components/data-table";
 
 export default async function MembersPage() {
   const response = await getAllMembers();
@@ -41,7 +40,7 @@ export default async function MembersPage() {
             Aqui estão todos membros ativos do Rugby Mauá!
           </p>
         </div>
-        <DataTable columns={columns} data={response} />
+        <MembersDataTable columns={columns} data={response} />
       </div>
     );
   }

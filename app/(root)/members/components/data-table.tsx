@@ -22,7 +22,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "../../../../components/ui/button";
-import { Input } from "../../../../components/ui/input";
 import { useState } from "react";
 import TableToolbar from "./table-toolbar";
 
@@ -31,7 +30,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
-export default function DataTable<TData, TValue>({
+export default function MembersDataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {

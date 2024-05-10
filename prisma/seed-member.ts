@@ -27,6 +27,9 @@ async function main() {
         team: member.team,
         uniformSize: member.uniformSize,
         uniformNumber: member.uniformNumber,
+        RugbyPayment: {
+          create: {},
+        },
       },
     });
   });

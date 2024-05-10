@@ -49,6 +49,10 @@ export const columns: ColumnDef<Member>[] = [
   {
     accessorKey: "yearOfJoinOnRugbyMaua",
     header: "",
+    getGroupingValue: ({ yearOfJoinOnRugbyMaua }) => {
+      const IS_BIXO = yearOfJoinOnRugbyMaua > new Date().getFullYear() - 1;
+      return IS_BIXO ? "BIXO" : "VETERANO";
+    },
     cell: ({ row }) => {
       const IS_BIXO =
         row.original.yearOfJoinOnRugbyMaua > new Date().getFullYear() - 1;

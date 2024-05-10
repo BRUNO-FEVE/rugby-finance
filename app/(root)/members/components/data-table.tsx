@@ -21,9 +21,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
+import { Button } from "../../../../components/ui/button";
+import { Input } from "../../../../components/ui/input";
 import { useState } from "react";
+import TableToolbar from "./table-toolbar";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -54,17 +55,7 @@ export default function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center py-4">
-        <Input
-          placeholder="Pesquisar membro..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) => {
-            table.getColumn("name")?.setFilterValue(event.target.value);
-            table.getColumn("name")?.setFilterValue(event.target.value);
-          }}
-          className="max-w-sm"
-        ></Input>
-      </div>
+      <TableToolbar table={table} />
       <div className="rounded-md border h-fit">
         <Table>
           <TableHeader>

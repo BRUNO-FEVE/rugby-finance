@@ -2,7 +2,7 @@
 
 import React from "react";
 import { getAllMembers } from "@/actions/get-all-members";
-import DataTable from "@/components/data-table";
+import DataTable from "@/app/(root)/members/components/data-table";
 import { columns } from "./components/columns";
 import { Member } from "@prisma/client";
 

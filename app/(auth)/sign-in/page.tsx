@@ -37,7 +37,7 @@ export default function SignIn() {
   return (
     <div className="w-full md:w-1/2 h-screen flex items-center justify-center">
       <div className="w-4/6 flex flex-col gap-3">
-        <h2 className="scroll-m-20 pb-2 text-4xl font-semibold tracking-tight first:mt-0 text-primary-foreground">
+        <h2 className="scroll-m-20 pb-2 text-4xl font-semibold tracking-tight first:mt-0 text-primary">
           <span className="font-extrabold">Bem Vindo!</span> <br /> Financeiro
           do Rugby
         </h2>
@@ -56,14 +56,11 @@ export default function SignIn() {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-primary-foreground">
-                      Email
-                    </FormLabel>
+                    <FormLabel className="text-primary">Email</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         disabled={isPeding}
-                        className="bg-primary text-primary-foreground"
                         placeholder="exemplo@email.com"
                         type="email"
                       />
@@ -77,14 +74,11 @@ export default function SignIn() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-primary-foreground">
-                      Senha
-                    </FormLabel>
+                    <FormLabel className="text-primary">Senha</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
                         disabled={isPeding}
-                        className="bg-primary text-primary-foreground"
                         placeholder="*******"
                         type="password"
                       />
@@ -94,7 +88,7 @@ export default function SignIn() {
                 )}
               />
             </div>
-            <Button disabled={isPeding} type="submit" variant={"secondary"}>
+            <Button disabled={isPeding} type="submit" variant={"default"}>
               Login
             </Button>
           </form>

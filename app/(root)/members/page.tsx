@@ -2,7 +2,7 @@
 
 import React from "react";
 import { getAllMembers } from "@/actions/get-all-members";
-import { columns } from "./components/columns";
+import { membersColumns } from "./components/columns";
 import MembersDataTable from "@/app/(root)/members/components/data-table";
 
 export default async function MembersPage() {
@@ -40,7 +40,7 @@ export default async function MembersPage() {
             Aqui estão todos membros ativos do Rugby Mauá!
           </p>
         </div>
-        <MembersDataTable columns={columns} data={response} />
+        <MembersDataTable columns={membersColumns} data={response} />
       </div>
     );
   }

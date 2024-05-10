@@ -1,13 +1,13 @@
 "use client";
 
-import Tag from "@/components/tag";
+import { Tag } from "@/components/tags";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Member } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
-export const columns: ColumnDef<Member>[] = [
+export const membersColumns: ColumnDef<Member>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {

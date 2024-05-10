@@ -29,8 +29,12 @@ export default function AuthLayout({
   }, [theme]);
 
   return (
-    <main className="flex flex-row w-screen bg-primary">
-      <Button className="absolute top-3 right-3" onClick={handleTheme}>
+    <main className="flex flex-row w-screen bg-background">
+      <Button
+        variant={"ghost"}
+        className="absolute top-3 right-3"
+        onClick={handleTheme}
+      >
         {/* Change to {nextTheme} */}
         {themeIcon}
       </Button>

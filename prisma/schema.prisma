@@ -8,21 +8,21 @@ datasource db {
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String  @map("user_id")
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String? 
-  access_token       String? 
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String? 
-  session_state      String?
- 
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
- 
+
   @@unique([provider, providerAccountId])
   @@map("accounts")
 }
@@ -35,29 +35,59 @@ model User {
   image         String?
   password      String?
   accounts      Account[]
- 
+
   @@map("users")
 }
 
 model Member {
-  id                    String @unique @default(uuid())
-  email                 String @unique
+  id                    String        @unique @default(uuid())
+  email                 String        @unique
   name                  String
-  nickName              String
-  cpf                   BigInt @unique
-  rg                    Int @unique
-  educationInstituition String
-  ra                    Int @unique
+  nickName              String       
+  cpf                   BigInt        @unique
+  rg                    Int           @unique
+  educationInstituition String        
+  ra                    Int?          @unique
   course                String
-  yearOfGraduation      Int
-  phoneNumber           BigInt @unique
-  yearOfBirth           Int
-  instagram             String @unique
-  lawsLink              String
-  readyLink             String
+  yearOfGraduation      Int           
+  phoneNumber           BigInt        @unique 
+  yearOfBirth           String        
+  yearOfJoinOnRugbyMaua Int           
+  instagram             String        @unique
+  lawsLink              String        
+  readyLink             String        
   team                  String
-  shirtSize             String
-  shirtNumber           Int?
+  uniformSize           String        
+  uniformNumber         Int?          
+  RugbyPayment          RugbyPayment? 
 
   @@map("members")
+  @@unique([id, name, nickName])
+}
+
+model RugbyPayment {
+  id                String @unique @default(uuid())
+  memberId          String @unique
+  memberName        String 
+  memberNickName    String
+  monthsPayment     Int[]  @default([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+  Payments          Payment[]
+
+  member  Member    @relation(fields: [memberId, memberName, memberNickName], references: [id, name, nickName], onDelete: Cascade)
+
+  @@map("rugby_payment")
+  @@unique([memberId, memberName, memberNickName])
+}
+
+model Payment {
+  id       String   @unique @default(uuid())
+  memberId String   
+  date     DateTime @unique @default(now())
+  value    Int
+  cause    String
+  type     String?
+
+  rugbyPayment RugbyPayment @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@map("payment")
 }

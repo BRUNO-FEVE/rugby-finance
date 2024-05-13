@@ -6,17 +6,36 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { string } from "zod";
 
 interface TagProps {
-  label: string;
+  label: string | number;
+  size?: "sm" | "md";
 }
 
-function Tag({ label }: TagProps) {
-  return (
-    <p className="w-fit border tracking-wide rounded-lg py-1 px-2 text-primary">
-      {label}
-    </p>
-  );
+function Tag({ label, size }: TagProps) {
+  const style = size === "sm" ? "text-xs " : "";
+
+  if (typeof label === "string") {
+    return (
+      <p
+        className={`w-fit h-fit border tracking-wide rounded-lg py-1 px-2 text-primary ${style}`}
+      >
+        {label}
+      </p>
+    );
+  }
+
+  // Hierarchy tag
+  if (typeof label === "number") {
+    return (
+      <p
+        className={`w-fit h-fit border tracking-wide rounded-lg py-1 px-2 text-primary ${style}`}
+      >
+        {label > new Date().getFullYear() - 1 ? "BIXO" : "VETERANO"}
+      </p>
+    );
+  }
 }
 
 interface PaymentTagProps {

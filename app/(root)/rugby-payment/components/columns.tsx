@@ -17,7 +17,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { useState } from "react";
+import AddPaymentDrawer from "./add-payment-drawer";
+import { getNameInitials } from "@/lib/utils";
 
 export const rugbyPaymentColumns: ColumnDef<RugbyPayment>[] = [
   {
@@ -44,8 +45,7 @@ export const rugbyPaymentColumns: ColumnDef<RugbyPayment>[] = [
           <Avatar className="w-7 h-7">
             <AvatarImage></AvatarImage>
             <AvatarFallback className="text-xs">
-              {splitedName[0].charAt(0)}
-              {splitedName[splitedName.length - 1].charAt(0)}
+              {getNameInitials(row.original.memberName)}
             </AvatarFallback>
           </Avatar>
           <p>
@@ -162,9 +162,21 @@ export const rugbyPaymentColumns: ColumnDef<RugbyPayment>[] = [
   {
     accessorKey: "settings",
     header: "",
-    cell: () => {
+    cell: ({ row }) => {
       return (
-        <TooltipProvider>
+        <>
+          <AddPaymentDrawer
+            memberId={row.original.memberId}
+            rugbyPaymentRecord={row.original}
+          />
+        </>
+      );
+    },
+  },
+];
+
+{
+  /* <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
@@ -178,8 +190,5 @@ export const rugbyPaymentColumns: ColumnDef<RugbyPayment>[] = [
               <p className="text-xs">Adicione Pagemento</p>
             </TooltipContent>
           </Tooltip>
-        </TooltipProvider>
-      );
-    },
-  },
-];
+        </TooltipProvider> */
+}

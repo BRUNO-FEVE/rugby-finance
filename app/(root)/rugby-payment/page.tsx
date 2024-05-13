@@ -1,7 +1,6 @@
 "use server";
 
 import { getAllRugbyPaymentsRecord } from "@/actions/get-all-rugby-payments";
-import React from "react";
 import RugbyPaymentDataTable from "./components/date-table";
 import { rugbyPaymentColumns } from "./components/columns";
 

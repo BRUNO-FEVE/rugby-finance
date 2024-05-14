@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from "../../../../components/ui/button";
 import { useContext, useState } from "react";
+import RugbyPaymentTableToolbar from "./table-toolbar";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -53,7 +54,8 @@ export default function RugbyPaymentDataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="rounded-md border h-fit">
+      <RugbyPaymentTableToolbar table={table} />
+      <div className="rounded-md border h-fit flex  items-center justify-center">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

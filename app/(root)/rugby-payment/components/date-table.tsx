@@ -55,7 +55,7 @@ export default function RugbyPaymentDataTable<TData, TValue>({
   return (
     <div>
       <RugbyPaymentTableToolbar table={table} />
-      <div className="rounded-md border h-fit flex  items-center justify-center">
+      <div className="rounded-md border h-fit flex flex-col items-center justify-center">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

@@ -1,5 +1,7 @@
+import { AddPaymentFormSchema } from "@/schemas";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import { z } from "zod";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -83,4 +85,23 @@ export function getTotal(paymentsArray: number[]): number {
   }
 
   return total;
+}
+
+export function getNumberArray(values: z.infer<typeof AddPaymentFormSchema>) {
+  const { jan, fev, mar, abr, mai, jun, jul, ago, set, out, nov, dez } = values;
+
+  return [
+    parseInt(jan),
+    parseInt(fev),
+    parseInt(mar),
+    parseInt(abr),
+    parseInt(mai),
+    parseInt(jun),
+    parseInt(jul),
+    parseInt(ago),
+    parseInt(set),
+    parseInt(out),
+    parseInt(nov),
+    parseInt(dez),
+  ];
 }

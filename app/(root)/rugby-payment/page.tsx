@@ -5,7 +5,7 @@ import RugbyPaymentDataTable from "./components/date-table";
 import { rugbyPaymentColumns } from "./components/columns";
 
 export default async function Home() {
-  const response = await getAllRugbyPaymentsRecord();
+  let response = await getAllRugbyPaymentsRecord();
 
   if (response) {
     return (

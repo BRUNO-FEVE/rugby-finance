@@ -39,7 +39,16 @@ export default function AddPaymentDrawer({
   memberId,
   rugbyPaymentRecord,
 }: AddPaymentDrawerProps) {
+  const [isOpen, setOpen] = useState<boolean>(false);
   const [member, setMember] = useState<Member>();
+
+  const openDrawer = () => {
+    setOpen(true);
+  };
+
+  const closeDrawer = () => {
+    setOpen(false);
+  };
 
   const getMember = async () => {
     setMember(await getMemberById(memberId));
@@ -52,16 +61,17 @@ export default function AddPaymentDrawer({
 
   if (member) {
     return (
-      <Drawer>
+      <Drawer open={isOpen}>
         <DrawerTrigger asChild>
           <Button
             variant={"ghost"}
             className="text-muted-foreground hover:text-primary"
+            onClick={openDrawer}
           >
             <ClipboardEditIcon className="w-4 h-4 " />
           </Button>
         </DrawerTrigger>
-        <DrawerContent className="h-5/6">
+        <DrawerContent className="h-fit">
           <div className="mx-auto w-full flex flex-row gap-6 p-16 justify-between items-center">
             <div className="w-2/5 flex flex-col gap-8">
               <Card>
@@ -96,19 +106,23 @@ export default function AddPaymentDrawer({
                     promoções e atualizações ao longo dos anos.
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="text-sm text-muted-foreground gap-3">
-                  <p>
-                    Anual:{" "}
-                    <span className="font-medium text-primary">R$ 250</span>
-                  </p>
-                  <p>
-                    Semestre:{" "}
-                    <span className="font-medium text-primary">R$ 130</span>
-                  </p>
-                  <p>
-                    Mensal:{" "}
-                    <span className="font-medium text-primary">R$ 30</span>
-                  </p>
+                <CardContent className="flex flex-row text-sm text-muted-foreground gap-7">
+                  <div className="flex flex-col items-start">
+                    <p>Anual</p>
+                    <span className="font-bold text-4xl text-primary">
+                      $250
+                    </span>
+                  </div>
+                  <div className="flex flex-col items-start">
+                    <p>Semestre</p>
+                    <span className="font-bold text-4xl text-primary">
+                      $130
+                    </span>
+                  </div>
+                  <div className="flex flex-col items-start">
+                    <p>Mensal</p>
+                    <span className="font-bold text-4xl text-primary">$30</span>
+                  </div>
                 </CardContent>
                 <CardFooter className="pb-5 px-5">
                   <div className="flex flex-row items-center rounded-md border p-3 gap-3">
@@ -136,6 +150,7 @@ export default function AddPaymentDrawer({
               <AddPaymentForm
                 member={member}
                 rugbyPaymentRecord={rugbyPaymentRecord}
+                closeDrawer={closeDrawer}
               />
             </div>
           </div>

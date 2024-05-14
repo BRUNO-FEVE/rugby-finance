@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { getNumberArray } from "@/lib/utils";
 import { AddPaymentFormSchema } from "@/schemas";
 import * as z from "zod";
 
@@ -19,27 +20,13 @@ export const updatedRugbyPayment = async ({
     return { error: "Invalid fields" };
   }
 
-  const { jan, fev, mar, abr, mai, jun, jul, ago, set, out, nov, dez } =
-    validateFields.data;
+  const finalValues = validateFields.data;
 
   try {
     const updatedRugbyPayment = await prisma.rugbyPayment.update({
       where: { memberId },
       data: {
-        monthsPayment: [
-          parseInt(jan),
-          parseInt(fev),
-          parseInt(mar),
-          parseInt(abr),
-          parseInt(mai),
-          parseInt(jun),
-          parseInt(jul),
-          parseInt(ago),
-          parseInt(set),
-          parseInt(out),
-          parseInt(nov),
-          parseInt(dez),
-        ],
+        monthsPayment: getNumberArray(finalValues),
       },
     });
 

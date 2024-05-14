@@ -5,6 +5,11 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { AddPaymentFormSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Input } from "@/components/ui/input";
+import { useTransition } from "react";
+import { Button } from "@/components/ui/button";
+import { updatedRugbyPayment } from "@/actions/update-rugby-payments";
+import { useRouter } from "next/navigation";
 import {
   Form,
   FormControl,
@@ -14,12 +19,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useTransition } from "react";
-import { Button } from "@/components/ui/button";
-import { updatedRugbyPayment } from "@/actions/update-rugby-payments";
 
-interface monthsProps {
+export interface monthsProps {
   type:
     | "jan"
     | "fev"
@@ -90,13 +91,16 @@ const months: monthsProps[] = [
 interface AddPaymentFormProps {
   member: Member;
   rugbyPaymentRecord: RugbyPayment;
+  closeDrawer: () => void;
 }
 
 export default function AddPaymentForm({
   member,
   rugbyPaymentRecord,
+  closeDrawer,
 }: AddPaymentFormProps) {
   const [isPeding, startTransition] = useTransition();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof AddPaymentFormSchema>>({
     resolver: zodResolver(AddPaymentFormSchema),
@@ -117,8 +121,10 @@ export default function AddPaymentForm({
   });
 
   function onSubmit(values: z.infer<typeof AddPaymentFormSchema>) {
-    startTransition(() => {
-      updatedRugbyPayment({ memberId: member.id, values });
+    startTransition(async () => {
+      await updatedRugbyPayment({ memberId: member.id, values });
+      closeDrawer();
+      window.location.reload();
     });
   }
 
@@ -140,7 +146,7 @@ export default function AddPaymentForm({
                     <FormItem>
                       <FormLabel>{month.name}</FormLabel>
                       <FormControl>
-                        <Input type="number" className="w-full" {...field} />
+                        <Input className="w-full" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

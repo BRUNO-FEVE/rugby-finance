@@ -22,7 +22,7 @@ import { getNameInitials } from "@/lib/utils";
 
 export const rugbyPaymentColumns: ColumnDef<RugbyPayment>[] = [
   {
-    accessorKey: "name",
+    accessorKey: "memberName",
     header: ({ column }) => {
       return (
         <div className="pl-5">
@@ -38,8 +38,6 @@ export const rugbyPaymentColumns: ColumnDef<RugbyPayment>[] = [
       );
     },
     cell: ({ row }) => {
-      const splitedName = row.original.memberName.split(" ");
-
       return (
         <div className="flex flex-row gap-2 items-center">
           <Avatar className="w-7 h-7">

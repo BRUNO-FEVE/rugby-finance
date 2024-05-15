@@ -13,9 +13,11 @@ export default function RugbyPaymentTableToolbar<TData>({
       <div className="flex items-center py-4 gap-4">
         <Input
           placeholder="Search member..."
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+          value={
+            (table.getColumn("memberName")?.getFilterValue() as string) ?? ""
+          }
           onChange={(event) => {
-            table.getColumn("name")?.setFilterValue(event.target.value);
+            table.getColumn("memberName")?.setFilterValue(event.target.value);
           }}
           className="max-w-sm h-9"
         />

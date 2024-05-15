@@ -1,5 +1,8 @@
 "use client";
 
+import { Button } from "../../../../components/ui/button";
+import { useState } from "react";
+import RugbyPaymentTableToolbar from "./table-toolbar";
 import {
   ColumnDef,
   SortingState,
@@ -8,11 +11,9 @@ import {
   useReactTable,
   getSortedRowModel,
   getPaginationRowModel,
-  ColumnFilter,
   ColumnFiltersState,
   getFilteredRowModel,
 } from "@tanstack/react-table";
-
 import {
   Table,
   TableBody,
@@ -21,9 +22,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "../../../../components/ui/button";
-import { useContext, useState } from "react";
-import RugbyPaymentTableToolbar from "./table-toolbar";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];

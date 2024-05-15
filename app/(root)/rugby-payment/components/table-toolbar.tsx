@@ -1,5 +1,7 @@
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table } from "@tanstack/react-table";
+import { HandCoins } from "lucide-react";
 
 interface RugbyPaymentTableToolbarProps<TData> {
   table: Table<TData>;
@@ -21,6 +23,12 @@ export default function RugbyPaymentTableToolbar<TData>({
           }}
           className="max-w-sm h-9"
         />
+      </div>
+      <div>
+        <Button variant={"default"} className="flex items-center gap-2">
+          Cobrar
+          <HandCoins className="w-5 h-5" />
+        </Button>
       </div>
     </div>
   );

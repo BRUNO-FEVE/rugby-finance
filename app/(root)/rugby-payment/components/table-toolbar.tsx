@@ -1,5 +1,9 @@
+"use client";
+
+import { chargeMembers } from "@/actions/charge-selected-members";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { RugbyPayment } from "@prisma/client";
 import { Table } from "@tanstack/react-table";
 import { HandCoins } from "lucide-react";
 
@@ -9,7 +13,20 @@ interface RugbyPaymentTableToolbarProps<TData> {
 
 export default function RugbyPaymentTableToolbar<TData>({
   table,
-}: RugbyPaymentTableToolbarProps<TData>) {
+}: RugbyPaymentTableToolbarProps<RugbyPayment>) {
+  const handleChargeMembers = async () => {
+    const rugbyPaymentsSelected = table.getSelectedRowModel();
+    console.log(rugbyPaymentsSelected);
+
+    const RugbyPayments: RugbyPayment[] = [];
+
+    rugbyPaymentsSelected.rows.map((row) => {
+      RugbyPayments.push(row.original);
+    });
+
+    await chargeMembers(RugbyPayments);
+  };
+
   return (
     <div className="flex justify-between">
       <div className="flex items-center py-4 gap-4">
@@ -25,9 +42,13 @@ export default function RugbyPaymentTableToolbar<TData>({
         />
       </div>
       <div>
-        <Button variant={"default"} className="flex items-center gap-2">
+        <Button
+          variant={"default"}
+          className="flex items-center gap-2 h-9 font-normal"
+          onClick={handleChargeMembers}
+        >
           Cobrar
-          <HandCoins className="w-5 h-5" />
+          <HandCoins className="w-4 h-4" />
         </Button>
       </div>
     </div>

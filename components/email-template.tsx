@@ -1,5 +1,3 @@
-"use server";
-
 import * as React from "react";
 
 interface EmailTemplateProps {
@@ -9,7 +7,7 @@ interface EmailTemplateProps {
 export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
   name,
 }) => (
-  <div>
-    Teste <br /> Tudo bem??? {name}
+  <div className="text-red-500 font-thin text-5xl">
+    Teste <br /> Tudo bem {name}??????
   </div>
 );

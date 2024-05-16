@@ -1,5 +1,8 @@
 "use client";
 
+import { Button } from "../../../../components/ui/button";
+import { useState } from "react";
+import RugbyPaymentTableToolbar from "./table-toolbar";
 import {
   ColumnDef,
   SortingState,
@@ -8,11 +11,9 @@ import {
   useReactTable,
   getSortedRowModel,
   getPaginationRowModel,
-  ColumnFilter,
   ColumnFiltersState,
   getFilteredRowModel,
 } from "@tanstack/react-table";
-
 import {
   Table,
   TableBody,
@@ -21,8 +22,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "../../../../components/ui/button";
-import { useState } from "react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -53,7 +52,8 @@ export default function RugbyPaymentDataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="rounded-md border h-fit">
+      <RugbyPaymentTableToolbar table={table} />
+      <div className="rounded-md border h-fit flex flex-col items-center justify-center">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

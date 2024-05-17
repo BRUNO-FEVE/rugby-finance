@@ -5,6 +5,7 @@ import { resend } from "@/lib/resend";
 import { getMemberById } from "./get-member-by-id";
 import { EmailTemplate } from "@/components/email-template";
 import { Dispatch, SetStateAction } from "react";
+import { getMonthsToPay } from "@/lib/utils";
 
 interface chargeMembersProps {
   members: RugbyPayment[];
@@ -19,10 +20,13 @@ export const chargeMembers = async ({ members }: chargeMembersProps) => {
     if (memberInfo) {
       const response = await resend.emails.send({
         from: "financeiro@rugbymaua.com.br",
-        to: [memberInfo.email],
+        to: ["bfevereiro.devmaua@gmail.com"],
         subject: "Rugby Mauá Cobrança de Mensalidade",
         text: "teste",
-        react: EmailTemplate({ name: memberInfo.name }),
+        react: EmailTemplate({
+          name: memberInfo.name,
+          meses: getMonthsToPay(member.monthsPayment),
+        }),
       });
 
       console.log(response);

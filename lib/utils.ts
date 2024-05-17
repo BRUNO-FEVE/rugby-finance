@@ -105,3 +105,21 @@ export function getNumberArray(values: z.infer<typeof AddPaymentFormSchema>) {
     parseInt(dez),
   ];
 }
+
+export function getMonthsToPay(paymentRecord: number[]): string {
+  let months = "";
+
+  for (let i = 0; i < paymentRecord.length; i++) {
+    if (paymentRecord[i] === 0) {
+      if (i !== paymentRecord.length - 1) {
+        months += getMonth(i) + ", ";
+      } else {
+        months += getMonth(i);
+      }
+    }
+  }
+
+  console.log(months);
+
+  return months;
+}

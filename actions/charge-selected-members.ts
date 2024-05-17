@@ -15,12 +15,10 @@ export const chargeMembers = async ({ members }: chargeMembersProps) => {
   members.map(async (member) => {
     const memberInfo = await getMemberById(member.memberId);
 
-    console.log(memberInfo);
-
     if (memberInfo) {
       const response = await resend.emails.send({
         from: "financeiro@rugbymaua.com.br",
-        to: ["bfevereiro.devmaua@gmail.com"],
+        to: [memberInfo.email],
         subject: "Rugby Mauá Cobrança de Mensalidade",
         text: "teste",
         react: EmailTemplate({
@@ -28,8 +26,6 @@ export const chargeMembers = async ({ members }: chargeMembersProps) => {
           meses: getMonthsToPay(member.monthsPayment),
         }),
       });
-
-      console.log(response);
     }
   });
 };

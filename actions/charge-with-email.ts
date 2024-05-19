@@ -11,7 +11,7 @@ interface chargeMembersProps {
   members: RugbyPayment[];
 }
 
-export const chargeMembers = async ({ members }: chargeMembersProps) => {
+export const chargeWithEmail = async ({ members }: chargeMembersProps) => {
   try {
     members.map(async (member) => {
       const memberInfo = await getMemberById(member.memberId);

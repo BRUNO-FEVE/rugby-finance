@@ -1,14 +1,89 @@
 "use client";
 
-import { useContext } from "react";
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { MembersToChargeContext } from "../../members-to-charge-context";
 import { Button } from "@/components/ui/button";
-import { Send } from "lucide-react";
+import { Check, CheckCircle, Send } from "lucide-react";
+import { chargeWithEmail } from "@/actions/charge-with-email";
 
-interface EmailStepProps {}
+interface EmailStepProps {
+  nextStage: () => void;
+}
 
-export default function EmailStep() {
-  const { membersInfo } = useContext(MembersToChargeContext);
+export default function EmailStep({ nextStage }: EmailStepProps) {
+  const { membersInfo, membersToCharge } = useContext(MembersToChargeContext);
+  const [button, setButton] = useState<ReactNode>();
+  const [sedingStage, setSendingStage] = useState<
+    "wating" | "sending" | "completed"
+  >("wating");
+
+  const sendEmails = async () => {
+    setSendingStage("sending");
+
+    // const response = await chargeWithEmail({
+    //   members: membersToCharge,
+    // });
+
+    setTimeout(() => {
+      setSendingStage("completed");
+    }, 3000); // 3 sec
+
+    // setSendingStage("completed");
+  };
+
+  const handleChargeButtonText = (chargeStage: string) => {
+    switch (chargeStage) {
+      case "wating":
+        return "Cobrar";
+      case "sending":
+        return "Cobrando...";
+      case "completed":
+        return "Cobrados";
+      default:
+        return "Cobrar";
+    }
+  };
+
+  useEffect(() => {
+    setButton(
+      <SendEmailButton
+        sedingStage={sedingStage}
+        buttonText={handleChargeButtonText(sedingStage)}
+        sendEmailsFunction={sendEmails}
+      />,
+    );
+    if (sedingStage === "completed") {
+      setTimeout(() => {
+        setButton(
+          <Button
+            className="fixed bottom-10 right-32 text-md gap-3"
+            onClick={nextStage}
+          >
+            Proxima Etapa
+          </Button>,
+        );
+      }, 3000); // 3 sec
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sedingStage]);
+
+  useEffect(() => {
+    setButton(
+      <SendEmailButton
+        sedingStage={sedingStage}
+        buttonText={handleChargeButtonText(sedingStage)}
+        sendEmailsFunction={sendEmails}
+      />,
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="w-7/12 h-fit pb-32 flex flex-col gap-2">
@@ -30,20 +105,41 @@ export default function EmailStep() {
               >
                 <p>{member.name}</p>
                 <p>{member.email}</p>
-                <p>{false ? "✅" : "🚫"}</p>
+                <p>{sedingStage === "completed" ? "✅" : "🚫"}</p>
               </div>
             );
           })}
         </div>
       </div>
-      <Button
-        variant={"default"}
-        size={"lg"}
-        className="fixed bottom-10 right-32 text-md gap-3"
-      >
-        Enviar
-        <Send className="h-4 w-4" />
-      </Button>
+      {button}
     </div>
   );
 }
+
+interface SendEmailButtonProps {
+  sedingStage: string;
+  buttonText: string;
+  sendEmailsFunction: () => void;
+}
+
+const SendEmailButton = ({
+  sedingStage,
+  buttonText,
+  sendEmailsFunction,
+}: SendEmailButtonProps) => {
+  return (
+    <Button
+      variant={"default"}
+      size={"lg"}
+      className={`fixed bottom-10 right-32 text-md gap-3 ${sedingStage === "completed" ? "bg-green-400" : null}`}
+      onClick={sendEmailsFunction}
+    >
+      {buttonText}
+      {sedingStage === "completed" ? (
+        <CheckCircle className="h-4 w-4" />
+      ) : (
+        <Send className="h-4 w-4" />
+      )}
+    </Button>
+  );
+};

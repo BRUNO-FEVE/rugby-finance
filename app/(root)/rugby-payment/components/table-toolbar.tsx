@@ -1,6 +1,5 @@
 "use client";
 
-import { chargeMembers } from "@/actions/charge-selected-members";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { RugbyPayment } from "@prisma/client";
@@ -9,6 +8,7 @@ import { HandCoins, CircleCheck } from "lucide-react";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import { MembersToChargeContext } from "../../members-to-charge-context";
+import { chargeWithEmail } from "@/actions/charge-with-email";
 
 interface RugbyPaymentTableToolbarProps<TData> {
   table: Table<TData>;
@@ -22,45 +22,6 @@ export default function RugbyPaymentTableToolbar<TData>({
   >("sleeping");
 
   const { setMembersToCharge } = useContext(MembersToChargeContext);
-
-  const handleChargeMembers = async () => {
-    const rugbyPaymentsSelected = table.getSelectedRowModel();
-    console.log(rugbyPaymentsSelected);
-
-    const RugbyPayments: RugbyPayment[] = [];
-
-    rugbyPaymentsSelected.rows.map((row) => {
-      RugbyPayments.push(row.original);
-    });
-
-    setSedingStage("sending");
-
-    await chargeMembers({
-      members: RugbyPayments,
-    });
-    setSedingStage("sended");
-  };
-
-  const handleChargeButtonText = (chargeStage: string) => {
-    switch (chargeStage) {
-      case "sleeping":
-        return "Cobrar";
-      case "sending":
-        return "Cobrando...";
-      case "sended":
-        return "Cobrados";
-      default:
-        return "Cobrar";
-    }
-  };
-
-  useEffect(() => {
-    if (sedingStage === "sended") {
-      setTimeout(() => {
-        setSedingStage("sleeping");
-      }, 3000); // 3 sec
-    }
-  }, [sedingStage]);
 
   return (
     <div className="flex justify-between">
@@ -96,18 +57,6 @@ export default function RugbyPaymentTableToolbar<TData>({
           Cobrar
           <HandCoins className="w-4 h-4" />
         </Link>
-        {/* <Button
-          variant={"default"}
-          className={`flex items-center gap-2 h-9 font-normal ${sedingStage === "sended" ? "bg-green-400" : null}`}
-          onClick={handleChargeMembers}
-        >
-          {handleChargeButtonText(sedingStage)}
-          {sedingStage === "sended" ? (
-            <CircleCheck className="w-4 h-4" />
-          ) : (
-            <HandCoins className="w-4 h-4" />
-          )}
-        </Button> */}
       </div>
     </div>
   );

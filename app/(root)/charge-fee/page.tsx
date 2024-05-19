@@ -10,9 +10,18 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import EmailStep from "./components/email-step";
+import WhatsappStep from "./components/whatsapp-step";
 
 export default function ChargeFee() {
-  const [stageContent, setStageContent] = useState<ReactNode>(<EmailStep />);
+  const [stageContent, setStageContent] = useState<ReactNode>();
+
+  const moveToSecondStep = () => {
+    setStageContent(<WhatsappStep />);
+  };
+
+  useEffect(() => {
+    setStageContent(<EmailStep nextStage={moveToSecondStep} />);
+  }, []);
 
   return (
     <div className="w-full h-full flex flex-col items-center gap-10 p-10">

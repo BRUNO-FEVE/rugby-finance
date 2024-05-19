@@ -6,7 +6,9 @@ import { Input } from "@/components/ui/input";
 import { RugbyPayment } from "@prisma/client";
 import { Table } from "@tanstack/react-table";
 import { HandCoins, CircleCheck } from "lucide-react";
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useContext, useEffect, useState } from "react";
+import { MembersToChargeContext } from "../../members-to-charge-context";
 
 interface RugbyPaymentTableToolbarProps<TData> {
   table: Table<TData>;
@@ -18,6 +20,8 @@ export default function RugbyPaymentTableToolbar<TData>({
   const [sedingStage, setSedingStage] = useState<
     "sleeping" | "sending" | "sended"
   >("sleeping");
+
+  const { setMembersToCharge } = useContext(MembersToChargeContext);
 
   const handleChargeMembers = async () => {
     const rugbyPaymentsSelected = table.getSelectedRowModel();
@@ -73,7 +77,26 @@ export default function RugbyPaymentTableToolbar<TData>({
         />
       </div>
       <div>
-        <Button
+        <Link
+          className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 gap-2"
+          href={"/charge-fee"}
+          onClick={() => {
+            const membersToCharge = table
+              .getSelectedRowModel()
+              .rows.map((row) => ({
+                id: row.original.id,
+                memberId: row.original.memberId,
+                memberName: row.original.memberName,
+                memberNickName: row.original.memberNickName,
+                monthsPayment: row.original.monthsPayment,
+              }));
+            setMembersToCharge(membersToCharge);
+          }}
+        >
+          Cobrar
+          <HandCoins className="w-4 h-4" />
+        </Link>
+        {/* <Button
           variant={"default"}
           className={`flex items-center gap-2 h-9 font-normal ${sedingStage === "sended" ? "bg-green-400" : null}`}
           onClick={handleChargeMembers}
@@ -84,7 +107,7 @@ export default function RugbyPaymentTableToolbar<TData>({
           ) : (
             <HandCoins className="w-4 h-4" />
           )}
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

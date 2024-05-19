@@ -38,24 +38,10 @@ export default function EmailStep({ nextStage }: EmailStepProps) {
     // setSendingStage("completed");
   };
 
-  const handleChargeButtonText = (chargeStage: string) => {
-    switch (chargeStage) {
-      case "wating":
-        return "Cobrar";
-      case "sending":
-        return "Cobrando...";
-      case "completed":
-        return "Cobrados";
-      default:
-        return "Cobrar";
-    }
-  };
-
   useEffect(() => {
     setButton(
       <SendEmailButton
         sedingStage={sedingStage}
-        buttonText={handleChargeButtonText(sedingStage)}
         sendEmailsFunction={sendEmails}
       />,
     );
@@ -78,7 +64,6 @@ export default function EmailStep({ nextStage }: EmailStepProps) {
     setButton(
       <SendEmailButton
         sedingStage={sedingStage}
-        buttonText={handleChargeButtonText(sedingStage)}
         sendEmailsFunction={sendEmails}
       />,
     );
@@ -118,15 +103,39 @@ export default function EmailStep({ nextStage }: EmailStepProps) {
 
 interface SendEmailButtonProps {
   sedingStage: string;
-  buttonText: string;
   sendEmailsFunction: () => void;
 }
 
 const SendEmailButton = ({
   sedingStage,
-  buttonText,
   sendEmailsFunction,
 }: SendEmailButtonProps) => {
+  const handleChargeButtonText = (chargeStage: string) => {
+    switch (chargeStage) {
+      case "wating":
+        return "Cobrar";
+      case "sending":
+        return "Cobrando...";
+      case "completed":
+        return "Cobrados";
+      default:
+        return "Cobrar";
+    }
+  };
+
+  const handleButtonIcon = (chargeStage: string) => {
+    switch (chargeStage) {
+      case "wating":
+        return <Send className="h-4 w-4" />;
+      case "sending":
+        return null;
+      case "completed":
+        return <CheckCircle className="h-4 w-4" />;
+      default:
+        return <Send className="h-4 w-4" />;
+    }
+  };
+
   return (
     <Button
       variant={"default"}
@@ -134,12 +143,8 @@ const SendEmailButton = ({
       className={`fixed bottom-10 right-32 text-md gap-3 ${sedingStage === "completed" ? "bg-green-400" : null}`}
       onClick={sendEmailsFunction}
     >
-      {buttonText}
-      {sedingStage === "completed" ? (
-        <CheckCircle className="h-4 w-4" />
-      ) : (
-        <Send className="h-4 w-4" />
-      )}
+      {handleChargeButtonText(sedingStage)}
+      {handleButtonIcon(sedingStage)}
     </Button>
   );
 };

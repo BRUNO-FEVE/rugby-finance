@@ -1,7 +1,6 @@
 "use client";
 
-import { ReactNode, useContext, useEffect, useState } from "react";
-import { MembersToChargeContext } from "../members-to-charge-context";
+import { ReactNode, useEffect, useState } from "react";
 import { Check } from "lucide-react";
 import {
   Tooltip,
@@ -13,10 +12,12 @@ import EmailStep from "./components/email-step";
 import WhatsappStep from "./components/whatsapp-step";
 
 export default function ChargeFee() {
+  const [stage, setStage] = useState<"first" | "second" | "end">("first");
   const [stageContent, setStageContent] = useState<ReactNode>();
 
   const moveToSecondStep = () => {
     setStageContent(<WhatsappStep />);
+    setStage("second");
   };
 
   useEffect(() => {
@@ -30,9 +31,17 @@ export default function ChargeFee() {
           <div className="bg-muted w-1/2 h-0.5" />
           <div className="bg-muted w-1/2 h-0.5" />
         </div>
-        <StepCircle stepStage={1} tooptipText={"Etapa 1: Enviar Email"} />
-        <StepCircle stepStage={2} tooptipText={"Etapa 1: Enviar Whatsapp"} />
-        <StepCircle tooptipText={"Fim"} />
+        <StepCircle
+          selected={stage === "first"}
+          stepStage={1}
+          tooptipText={"Etapa 1: Enviar Email"}
+        />
+        <StepCircle
+          selected={stage === "second"}
+          stepStage={2}
+          tooptipText={"Etapa 1: Enviar Whatsapp"}
+        />
+        <StepCircle selected={stage === "end"} tooptipText={"Fim"} />
       </div>
       {stageContent}
     </div>
@@ -42,9 +51,14 @@ export default function ChargeFee() {
 interface StepCircleProps {
   stepStage?: number;
   tooptipText: string;
+  selected?: boolean;
 }
 
-function StepCircle({ stepStage, tooptipText }: StepCircleProps) {
+function StepCircle({
+  stepStage,
+  tooptipText,
+  selected = false,
+}: StepCircleProps) {
   let triggerContent: string | ReactNode = <Check className="h-4 w-4" />;
 
   if (stepStage) {
@@ -55,7 +69,9 @@ function StepCircle({ stepStage, tooptipText }: StepCircleProps) {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <div className="h-7 w-7 bg-background text-muted-foreground rounded-full flex items-center justify-center text-sm border border-muted-foreground z-10 cursor-pointer">
+          <div
+            className={`h-7 w-7 bg-background ${selected ? "bg-primary text-primary-foreground" : "text-muted-foreground border-muted-foreground"} rounded-full flex items-center justify-center text-sm border z-10 cursor-pointer`}
+          >
             {triggerContent}
           </div>
         </TooltipTrigger>

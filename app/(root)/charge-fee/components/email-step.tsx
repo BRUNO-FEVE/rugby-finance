@@ -39,7 +39,7 @@ export default function EmailStep() {
       <Button
         variant={"default"}
         size={"lg"}
-        className="fixed bottom-10 right-32 text-md gap-2"
+        className="fixed bottom-10 right-32 text-md gap-3"
       >
         Enviar
         <Send className="h-4 w-4" />

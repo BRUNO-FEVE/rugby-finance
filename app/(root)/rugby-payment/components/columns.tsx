@@ -67,7 +67,7 @@ export const rugbyPaymentColumns: ColumnDef<RugbyPayment>[] = [
           <p>
             {row.original.memberName}{" "}
             <span className="text-muted-foreground">
-              ({row.original.memberNickName})
+              ({row.original.memberNickname})
             </span>
           </p>
         </div>

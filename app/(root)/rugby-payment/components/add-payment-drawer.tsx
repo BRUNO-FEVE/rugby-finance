@@ -87,7 +87,7 @@ export default function AddPaymentDrawer({
                       <CardTitle>
                         {member.name}{" "}
                         <span className="text-muted-foreground">
-                          ({member.nickName})
+                          ({member.nickname})
                         </span>
                       </CardTitle>
                       <div className="flex flex-row gap-2">

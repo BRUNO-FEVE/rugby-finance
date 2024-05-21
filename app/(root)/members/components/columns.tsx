@@ -40,7 +40,7 @@ export const membersColumns: ColumnDef<Member>[] = [
           <p>
             {row.original.name}{" "}
             <span className="text-muted-foreground">
-              ({row.original.nickName})
+              ({row.original.nickname})
             </span>
           </p>
         </div>

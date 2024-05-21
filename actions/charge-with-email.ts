@@ -4,7 +4,6 @@ import { RugbyPayment } from "@prisma/client";
 import { resend } from "@/lib/resend";
 import { getMemberById } from "./get-member-by-id";
 import { EmailTemplate } from "@/components/email-template";
-import { Dispatch, SetStateAction } from "react";
 import { getMonthsToPay } from "@/lib/utils";
 
 interface chargeMembersProps {

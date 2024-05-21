@@ -2,6 +2,7 @@
 
 import { getMembersByPaymentRecord } from "@/actions/get-members-by-payment-record";
 import { Member, RugbyPayment } from "@prisma/client";
+
 import {
   Dispatch,
   SetStateAction,
@@ -19,8 +20,9 @@ interface DefaultMembersToChargeProps {
         id: string;
         memberId: string;
         memberName: string;
-        memberNickName: string;
+        memberNickname: string;
         monthsPayment: number[];
+        isPaying: boolean;
       }[]
     >
   >;

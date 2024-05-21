@@ -35,7 +35,7 @@ export default function WhatsappStep({ nextStage }: WhatsappStepProps) {
     MOUNTHS = getMonthsToPay(CURRENT_RUGBY_RECORD.monthsPayment);
 
     BASE_TEXT = getBaseText({
-      nickname: CURRENT_MEMBER.nickName,
+      nickname: CURRENT_MEMBER.nickname,
       monthsToPay: getMonthsToPay(CURRENT_RUGBY_RECORD.monthsPayment),
     });
   }
@@ -74,7 +74,7 @@ export default function WhatsappStep({ nextStage }: WhatsappStepProps) {
         <p className="text-lg font-semibold">
           Membro:{" "}
           <span className="font-normal bg-muted rounded-md p-1">
-            {CURRENT_MEMBER.name} ({CURRENT_MEMBER.nickName})
+            {CURRENT_MEMBER.name} ({CURRENT_MEMBER.nickname})
           </span>
         </p>
       </div>
@@ -112,7 +112,7 @@ export default function WhatsappStep({ nextStage }: WhatsappStepProps) {
                 <span className="text-muted-foreground">Mensagem:</span>
                 <br />
                 <br />
-                Olá {CURRENT_MEMBER.nickName}, <br /> <br /> Espero que você
+                Olá {CURRENT_MEMBER.nickname}, <br /> <br /> Espero que você
                 esteja bem! Gostaria de lembrar sobre a contribuição mensal para
                 o nosso time de rugby da faculdade, o Rugby Mauá. Sua
                 participação é essencial para o sucesso do time e para

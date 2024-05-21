@@ -10,7 +10,7 @@ interface payRugbyPaymentProps {
   values: z.infer<typeof AddPaymentFormSchema>;
 }
 
-export const updatedRugbyPayment = async ({
+export const updatePaymentRecord = async ({
   memberId,
   values,
 }: payRugbyPaymentProps) => {
@@ -23,10 +23,10 @@ export const updatedRugbyPayment = async ({
   const finalValues = validateFields.data;
 
   try {
-    const updatedRugbyPayment = await prisma.rugbyPayment.update({
-      where: { memberId },
+    const updatedRugbyPayment = await prisma.member.update({
+      where: { id: memberId },
       data: {
-        monthsPayment: getNumberArray(finalValues),
+        paymentRecord: getNumberArray(finalValues),
       },
     });
 

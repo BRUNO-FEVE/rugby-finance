@@ -4,7 +4,7 @@ import { getMemberById } from "@/actions/get-member-by-id";
 import { Button } from "@/components/ui/button";
 import { ClipboardEditIcon, Coins } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Member, RugbyPayment } from "@prisma/client";
+import { Member } from "@prisma/client";
 import { formatPhoneNumber, getMonths, getNameInitials } from "@/lib/utils";
 import { Tag } from "@/components/tags";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -31,16 +31,11 @@ import { Separator } from "@/components/ui/separator";
 import AddPaymentForm from "./add-payment-form";
 
 interface AddPaymentDrawerProps {
-  rugbyPaymentRecord: RugbyPayment;
-  memberId: string;
+  member: Member;
 }
 
-export default function AddPaymentDrawer({
-  memberId,
-  rugbyPaymentRecord,
-}: AddPaymentDrawerProps) {
+export default function AddPaymentDrawer({ member }: AddPaymentDrawerProps) {
   const [isOpen, setOpen] = useState<boolean>(false);
-  const [member, setMember] = useState<Member>();
 
   const openDrawer = () => {
     setOpen(true);
@@ -49,15 +44,6 @@ export default function AddPaymentDrawer({
   const closeDrawer = () => {
     setOpen(false);
   };
-
-  const getMember = async () => {
-    setMember(await getMemberById(memberId));
-  };
-
-  useEffect(() => {
-    getMember();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   if (member) {
     return (
@@ -87,7 +73,7 @@ export default function AddPaymentDrawer({
                       <CardTitle>
                         {member.name}{" "}
                         <span className="text-muted-foreground">
-                          ({member.nickName})
+                          ({member.nickname})
                         </span>
                       </CardTitle>
                       <div className="flex flex-row gap-2">
@@ -147,11 +133,7 @@ export default function AddPaymentDrawer({
                 </DrawerDescription>
               </DrawerHeader>
               <Separator />
-              <AddPaymentForm
-                member={member}
-                rugbyPaymentRecord={rugbyPaymentRecord}
-                closeDrawer={closeDrawer}
-              />
+              <AddPaymentForm member={member} closeDrawer={closeDrawer} />
             </div>
           </div>
         </DrawerContent>

@@ -3,7 +3,6 @@
 import { Button } from "../../../../components/ui/button";
 import { useState } from "react";
 import RugbyPaymentTableToolbar from "./table-toolbar";
-import { RugbyPayment } from "@prisma/client";
 import {
   ColumnDef,
   SortingState,
@@ -23,6 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Member } from "@prisma/client";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -32,7 +32,7 @@ interface DataTableProps<TData, TValue> {
 export default function RugbyPaymentDataTable<TData, TValue>({
   columns,
   data,
-}: DataTableProps<RugbyPayment, TValue>) {
+}: DataTableProps<Member, TValue>) {
   const [sorting, setSortiing] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 

@@ -48,8 +48,9 @@ export default function RugbyPaymentTableToolbar<TData>({
                 id: row.original.id,
                 memberId: row.original.memberId,
                 memberName: row.original.memberName,
-                memberNickName: row.original.memberNickName,
+                memberNickname: row.original.memberNickname,
                 monthsPayment: row.original.monthsPayment,
+                isPaying: row.original.isPaying,
               }));
             setMembersToCharge(membersToCharge);
           }}

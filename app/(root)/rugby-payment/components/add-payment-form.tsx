@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { useTransition } from "react";
 import { Button } from "@/components/ui/button";
-import { updatePaymentRecord } from "@/actions/update-rugby-payments";
+import { updatePaymentRecord } from "@/actions/update-payment-records";
 import { useRouter } from "next/navigation";
 import {
   Form,

@@ -118,8 +118,34 @@ export function getMonthsToPay(paymentRecord: number[]): string {
       }
     }
   }
-
-  console.log(months);
-
   return months;
+}
+
+interface getBaseTextProps {
+  nickname: string;
+  monthsToPay: string;
+}
+
+export function getBaseText({ nickname, monthsToPay }: getBaseTextProps) {
+  return `
+Olá ${nickname},
+
+Espero que você esteja bem! Gostaria de lembrar sobre a contribuição mensal para o nosso time de rugby da faculdade, o Rugby Mauá. Sua participação é essencial para o sucesso do time e para fortalecermos nossa comunidade esportiva.
+
+Notamos que os pagamentos dos seguintes meses estão pendentes: ${monthsToPay}.
+
+Para facilitar sua contribuição, oferecemos diferentes planos de mensalidade:
+
+- Mensal: R$ 25,00
+- Semestral: R$ 130,00
+- Anual: R$ 250,00
+
+Entendemos que você pode estar enfrentando dificuldades financeiras e estamos dispostos a encontrar soluções, se necessário. Agradecemos muito pelo seu apoio contínuo e pedimos que, por favor, efetue o pagamento o mais breve possível.
+
+Pix do Canadá: 11996019114.
+
+Após o pagamento, por gentileza, envie o comprovante para um dos membros da comissão para atualizarmos nosso sistema.
+
+Contamos com você! 😊🏉
+`;
 }

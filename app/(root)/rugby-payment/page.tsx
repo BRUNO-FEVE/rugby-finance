@@ -1,11 +1,11 @@
 "use server";
 
-import { getAllRugbyPaymentsRecord } from "@/actions/get-all-rugby-payments";
 import RugbyPaymentDataTable from "./components/date-table";
 import { rugbyPaymentColumns } from "./components/columns";
+import { getActivePaymentMembers } from "@/actions/get-active-payment-members";
 
 export default async function Home() {
-  let response = await getAllRugbyPaymentsRecord();
+  let response = await getActivePaymentMembers();
 
   if (response) {
     return (

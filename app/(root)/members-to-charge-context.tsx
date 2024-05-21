@@ -1,33 +1,14 @@
 "use client";
 
-import { getMembersByPaymentRecord } from "@/actions/get-members-by-payment-record";
-import { Member, RugbyPayment } from "@prisma/client";
-import {
-  Dispatch,
-  SetStateAction,
-  createContext,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, SetStateAction, createContext, useState } from "react";
+import { Member } from "@prisma/client";
 
 interface DefaultMembersToChargeProps {
-  membersInfo: Member[];
-  membersToCharge: RugbyPayment[];
-  setMembersToCharge: Dispatch<
-    SetStateAction<
-      {
-        id: string;
-        memberId: string;
-        memberName: string;
-        memberNickName: string;
-        monthsPayment: number[];
-      }[]
-    >
-  >;
+  membersToCharge: Member[];
+  setMembersToCharge: Dispatch<SetStateAction<Member[]>>;
 }
 
 const DefaultMembersToCharge: DefaultMembersToChargeProps = {
-  membersInfo: [],
   membersToCharge: [],
   setMembersToCharge: () => {},
 };
@@ -39,23 +20,11 @@ export function MembersToChargeProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [membersToCharge, setMembersToCharge] = useState<RugbyPayment[]>([]);
-  const [membersInfo, setMembersInfo] = useState<Member[]>([]);
-
-  const loadMembersInfos = async () => {
-    setMembersInfo(
-      await getMembersByPaymentRecord({ paymentRecords: membersToCharge }),
-    );
-  };
-
-  useEffect(() => {
-    loadMembersInfos();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [membersToCharge]);
+  const [membersToCharge, setMembersToCharge] = useState<Member[]>([]);
 
   return (
     <MembersToChargeContext.Provider
-      value={{ membersInfo, membersToCharge, setMembersToCharge }}
+      value={{ membersToCharge, setMembersToCharge }}
     >
       {children}
     </MembersToChargeContext.Provider>

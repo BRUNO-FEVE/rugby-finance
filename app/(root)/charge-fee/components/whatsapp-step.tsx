@@ -17,26 +17,26 @@ interface WhatsappStepProps {
 }
 
 export default function WhatsappStep({ nextStage }: WhatsappStepProps) {
-  const { membersInfo, membersToCharge } = useContext(MembersToChargeContext);
+  const { membersToCharge } = useContext(MembersToChargeContext);
   const [memberCount, setMemberCount] = useState<number>(0);
   const [progress, setProgress] = useState<number>(0);
 
   const PERCENTAGE_OF_ONE_MEMBER = 100 / membersToCharge.length;
 
-  const CURRENT_MEMBER = membersInfo[memberCount];
+  const CURRENT_MEMBER = membersToCharge[memberCount];
   const CURRENT_RUGBY_RECORD = membersToCharge.find(
-    (member) => member.memberId === CURRENT_MEMBER.id,
+    (member) => member.id === CURRENT_MEMBER.id,
   );
 
   let BASE_TEXT = "";
   let MOUNTHS = "";
 
   if (CURRENT_RUGBY_RECORD) {
-    MOUNTHS = getMonthsToPay(CURRENT_RUGBY_RECORD.monthsPayment);
+    MOUNTHS = getMonthsToPay(CURRENT_RUGBY_RECORD.paymentRecord);
 
     BASE_TEXT = getBaseText({
-      nickname: CURRENT_MEMBER.nickName,
-      monthsToPay: getMonthsToPay(CURRENT_RUGBY_RECORD.monthsPayment),
+      nickname: CURRENT_MEMBER.nickname,
+      monthsToPay: getMonthsToPay(CURRENT_RUGBY_RECORD.paymentRecord),
     });
   }
 
@@ -74,7 +74,7 @@ export default function WhatsappStep({ nextStage }: WhatsappStepProps) {
         <p className="text-lg font-semibold">
           Membro:{" "}
           <span className="font-normal bg-muted rounded-md p-1">
-            {CURRENT_MEMBER.name} ({CURRENT_MEMBER.nickName})
+            {CURRENT_MEMBER.name} ({CURRENT_MEMBER.nickname})
           </span>
         </p>
       </div>
@@ -112,7 +112,7 @@ export default function WhatsappStep({ nextStage }: WhatsappStepProps) {
                 <span className="text-muted-foreground">Mensagem:</span>
                 <br />
                 <br />
-                Olá {CURRENT_MEMBER.nickName}, <br /> <br /> Espero que você
+                Olá {CURRENT_MEMBER.nickname}, <br /> <br /> Espero que você
                 esteja bem! Gostaria de lembrar sobre a contribuição mensal para
                 o nosso time de rugby da faculdade, o Rugby Mauá. Sua
                 participação é essencial para o sucesso do time e para

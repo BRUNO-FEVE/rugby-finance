@@ -1,6 +1,6 @@
 "use client";
 
-import { Member, RugbyPayment } from "@prisma/client";
+import { Member } from "@prisma/client";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { AddPaymentFormSchema } from "@/schemas";
@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { useTransition } from "react";
 import { Button } from "@/components/ui/button";
-import { updatedRugbyPayment } from "@/actions/update-rugby-payments";
+import { updatePaymentRecord } from "@/actions/update-payment-records";
 import { useRouter } from "next/navigation";
 import {
   Form,
@@ -90,13 +90,11 @@ const months: monthsProps[] = [
 
 interface AddPaymentFormProps {
   member: Member;
-  rugbyPaymentRecord: RugbyPayment;
   closeDrawer: () => void;
 }
 
 export default function AddPaymentForm({
   member,
-  rugbyPaymentRecord,
   closeDrawer,
 }: AddPaymentFormProps) {
   const [isPeding, startTransition] = useTransition();
@@ -105,24 +103,24 @@ export default function AddPaymentForm({
   const form = useForm<z.infer<typeof AddPaymentFormSchema>>({
     resolver: zodResolver(AddPaymentFormSchema),
     defaultValues: {
-      jan: rugbyPaymentRecord.monthsPayment[0].toString(),
-      fev: rugbyPaymentRecord.monthsPayment[1].toString(),
-      mar: rugbyPaymentRecord.monthsPayment[2].toString(),
-      abr: rugbyPaymentRecord.monthsPayment[3].toString(),
-      mai: rugbyPaymentRecord.monthsPayment[4].toString(),
-      jun: rugbyPaymentRecord.monthsPayment[5].toString(),
-      jul: rugbyPaymentRecord.monthsPayment[6].toString(),
-      ago: rugbyPaymentRecord.monthsPayment[7].toString(),
-      set: rugbyPaymentRecord.monthsPayment[8].toString(),
-      out: rugbyPaymentRecord.monthsPayment[9].toString(),
-      nov: rugbyPaymentRecord.monthsPayment[10].toString(),
-      dez: rugbyPaymentRecord.monthsPayment[11].toString(),
+      jan: member.paymentRecord[0].toString(),
+      fev: member.paymentRecord[1].toString(),
+      mar: member.paymentRecord[2].toString(),
+      abr: member.paymentRecord[3].toString(),
+      mai: member.paymentRecord[4].toString(),
+      jun: member.paymentRecord[5].toString(),
+      jul: member.paymentRecord[6].toString(),
+      ago: member.paymentRecord[7].toString(),
+      set: member.paymentRecord[8].toString(),
+      out: member.paymentRecord[9].toString(),
+      nov: member.paymentRecord[10].toString(),
+      dez: member.paymentRecord[11].toString(),
     },
   });
 
   function onSubmit(values: z.infer<typeof AddPaymentFormSchema>) {
     startTransition(async () => {
-      await updatedRugbyPayment({ memberId: member.id, values });
+      await updatePaymentRecord({ memberId: member.id, values });
       closeDrawer();
       window.location.reload();
     });

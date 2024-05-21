@@ -3,14 +3,14 @@
 import { PaymentTag } from "@/components/tags";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { RugbyPayment } from "@prisma/client";
+import { Member } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import AddPaymentDrawer from "./add-payment-drawer";
 import { getNameInitials } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
 
-export const rugbyPaymentColumns: ColumnDef<RugbyPayment>[] = [
+export const rugbyPaymentColumns: ColumnDef<Member>[] = [
   {
     accessorKey: "select",
     header: ({ table }) => {
@@ -61,13 +61,13 @@ export const rugbyPaymentColumns: ColumnDef<RugbyPayment>[] = [
           <Avatar className="w-7 h-7">
             <AvatarImage></AvatarImage>
             <AvatarFallback className="text-xs">
-              {getNameInitials(row.original.memberName)}
+              {getNameInitials(row.original.name)}
             </AvatarFallback>
           </Avatar>
           <p>
-            {row.original.memberName}{" "}
+            {row.original.name}{" "}
             <span className="text-muted-foreground">
-              ({row.original.memberNickName})
+              ({row.original.nickname})
             </span>
           </p>
         </div>
@@ -80,7 +80,7 @@ export const rugbyPaymentColumns: ColumnDef<RugbyPayment>[] = [
     cell: ({ row }) => {
       let TOTAL = 0;
 
-      row.original.monthsPayment.map((payment) => {
+      row.original.paymentRecord.map((payment) => {
         TOTAL += payment;
       });
 
@@ -95,84 +95,84 @@ export const rugbyPaymentColumns: ColumnDef<RugbyPayment>[] = [
     accessorKey: "jan",
     header: "Jan",
     cell: ({ row }) => {
-      return <PaymentTag payment={row.original.monthsPayment[0]} />;
+      return <PaymentTag payment={row.original.paymentRecord[0]} />;
     },
   },
   {
     accessorKey: "fev",
     header: "Fev",
     cell: ({ row }) => {
-      return <PaymentTag payment={row.original.monthsPayment[1]} />;
+      return <PaymentTag payment={row.original.paymentRecord[1]} />;
     },
   },
   {
     accessorKey: "mar",
     header: "Mar",
     cell: ({ row }) => {
-      return <PaymentTag payment={row.original.monthsPayment[2]} />;
+      return <PaymentTag payment={row.original.paymentRecord[2]} />;
     },
   },
   {
     accessorKey: "abr",
     header: "Abr",
     cell: ({ row }) => {
-      return <PaymentTag payment={row.original.monthsPayment[3]} />;
+      return <PaymentTag payment={row.original.paymentRecord[3]} />;
     },
   },
   {
     accessorKey: "mai",
     header: "May",
     cell: ({ row }) => {
-      return <PaymentTag payment={row.original.monthsPayment[4]} />;
+      return <PaymentTag payment={row.original.paymentRecord[4]} />;
     },
   },
   {
     accessorKey: "jun",
     header: "Jun",
     cell: ({ row }) => {
-      return <PaymentTag payment={row.original.monthsPayment[5]} />;
+      return <PaymentTag payment={row.original.paymentRecord[5]} />;
     },
   },
   {
     accessorKey: "jul",
     header: "Jul",
     cell: ({ row }) => {
-      return <PaymentTag payment={row.original.monthsPayment[6]} />;
+      return <PaymentTag payment={row.original.paymentRecord[6]} />;
     },
   },
   {
     accessorKey: "ago",
     header: "Ago",
     cell: ({ row }) => {
-      return <PaymentTag payment={row.original.monthsPayment[7]} />;
+      return <PaymentTag payment={row.original.paymentRecord[7]} />;
     },
   },
   {
     accessorKey: "set",
     header: "Set",
     cell: ({ row }) => {
-      return <PaymentTag payment={row.original.monthsPayment[8]} />;
+      return <PaymentTag payment={row.original.paymentRecord[8]} />;
     },
   },
   {
     accessorKey: "out",
     header: "Out",
     cell: ({ row }) => {
-      return <PaymentTag payment={row.original.monthsPayment[9]} />;
+      return <PaymentTag payment={row.original.paymentRecord[9]} />;
     },
   },
   {
     accessorKey: "nov",
     header: "Nov",
     cell: ({ row }) => {
-      return <PaymentTag payment={row.original.monthsPayment[10]} />;
+      return <PaymentTag payment={row.original.paymentRecord[10]} />;
     },
   },
   {
     accessorKey: "dez",
     header: "Dez",
     cell: ({ row }) => {
-      return <PaymentTag payment={row.original.monthsPayment[11]} />;
+      return <PaymentTag payment={row.original.paymentRecord[11]} />;
     },
   },
   {
@@ -181,10 +181,7 @@ export const rugbyPaymentColumns: ColumnDef<RugbyPayment>[] = [
     cell: ({ row }) => {
       return (
         <>
-          <AddPaymentDrawer
-            memberId={row.original.memberId}
-            rugbyPaymentRecord={row.original}
-          />
+          <AddPaymentDrawer member={row.original} />
         </>
       );
     },

@@ -3,12 +3,11 @@
 
 // async function main() {
 //   await prisma.member.deleteMany();
-//   await prisma.rugbyPayment.deleteMany();
 
 //   const CURRENT_YEAR = new Date().getFullYear();
 
 //   memberJson.map(async (member) => {
-//     const memberCreated = await prisma.member.create({
+//     await prisma.member.create({
 //       data: {
 //         email: member.email,
 //         name: member.name,
@@ -28,15 +27,7 @@
 //         team: member.team,
 //         uniformSize: member.uniformSize,
 //         uniformNumber: member.uniformNumber ?? null,
-//       },
-//     });
-
-//     await prisma.rugbyPayment.create({
-//       data: {
-//         memberId: memberCreated.id,
-//         memberName: memberCreated.name,
-//         memberNickname: memberCreated.nickname,
-//         isPaying: memberCreated.yearOfGraduation >= CURRENT_YEAR,
+//         isPaying: member.yearOfGraduation >= CURRENT_YEAR,
 //       },
 //     });
 //   });

@@ -1,16 +1,9 @@
 "use client";
 
-import {
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { ReactNode, useContext, useEffect, useState } from "react";
 import { MembersToChargeContext } from "../../members-to-charge-context";
 import { Button } from "@/components/ui/button";
-import { Check, CheckCircle, Send } from "lucide-react";
+import { CheckCircle, Send } from "lucide-react";
 import { chargeWithEmail } from "@/actions/charge-with-email";
 
 interface EmailStepProps {
@@ -27,15 +20,11 @@ export default function EmailStep({ nextStage }: EmailStepProps) {
   const sendEmails = async () => {
     setSendingStage("sending");
 
-    // const response = await chargeWithEmail({
+    // await chargeWithEmail({
     //   members: membersToCharge,
     // });
 
-    setTimeout(() => {
-      setSendingStage("completed");
-    }, 3000); // 3 sec
-
-    // setSendingStage("completed");
+    setSendingStage("completed");
   };
 
   useEffect(() => {
@@ -140,7 +129,7 @@ const SendEmailButton = ({
     <Button
       variant={"default"}
       size={"lg"}
-      className={`fixed bottom-10 right-32 text-md gap-3 ${sedingStage === "completed" ? "bg-green-400" : null}`}
+      className={`fixed bottom-10 right-32 text-md gap-3 ${sedingStage === "completed" ? "bg-green-400 hover:bg-green-400" : null}`}
       onClick={sendEmailsFunction}
     >
       {handleChargeButtonText(sedingStage)}

@@ -57,7 +57,13 @@ export const membersColumns: ColumnDef<Member>[] = [
     cell: ({ row }) => {
       const IS_BIXO =
         row.original.yearOfJoinOnRugbyMaua > new Date().getFullYear() - 1;
-      return <Tag label={IS_BIXO ? "BIXO" : "VETERANO"} />;
+
+      return (
+        <div className="flex flex-row gap-2">
+          <Tag label={row.original.isPaying ? "PAGANTE" : "NÃO PAGANTE"} />
+          <Tag label={IS_BIXO ? "BIXO" : "VETERANO"} />
+        </div>
+      );
     },
   },
   {

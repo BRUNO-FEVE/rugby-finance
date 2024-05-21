@@ -11,7 +11,7 @@ interface EmailStepProps {
 }
 
 export default function EmailStep({ nextStage }: EmailStepProps) {
-  const { membersInfo, membersToCharge } = useContext(MembersToChargeContext);
+  const { membersToCharge } = useContext(MembersToChargeContext);
   const [button, setButton] = useState<ReactNode>();
   const [sedingStage, setSendingStage] = useState<
     "wating" | "sending" | "completed"
@@ -71,7 +71,7 @@ export default function EmailStep({ nextStage }: EmailStepProps) {
       <div className="pt-10 flex flex-col gap-10 ">
         <p className="font-semibold text-xl">Membros Selecionados</p>
         <div className="w-full border border-muted rounded-md flex flex-col gap-2">
-          {membersInfo.map((member) => {
+          {membersToCharge.map((member) => {
             return (
               <div
                 key={member.id}

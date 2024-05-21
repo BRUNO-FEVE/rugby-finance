@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { RugbyPayment } from "@prisma/client";
+import { Member } from "@prisma/client";
 import { Table } from "@tanstack/react-table";
 import { HandCoins, CircleCheck } from "lucide-react";
 import Link from "next/link";
@@ -16,7 +16,7 @@ interface RugbyPaymentTableToolbarProps<TData> {
 
 export default function RugbyPaymentTableToolbar<TData>({
   table,
-}: RugbyPaymentTableToolbarProps<RugbyPayment>) {
+}: RugbyPaymentTableToolbarProps<Member>) {
   const [sedingStage, setSedingStage] = useState<
     "sleeping" | "sending" | "sended"
   >("sleeping");
@@ -44,14 +44,8 @@ export default function RugbyPaymentTableToolbar<TData>({
           onClick={() => {
             const membersToCharge = table
               .getSelectedRowModel()
-              .rows.map((row) => ({
-                id: row.original.id,
-                memberId: row.original.memberId,
-                memberName: row.original.memberName,
-                memberNickname: row.original.memberNickname,
-                monthsPayment: row.original.monthsPayment,
-                isPaying: row.original.isPaying,
-              }));
+              .rows.map((row) => row.original);
+
             setMembersToCharge(membersToCharge);
           }}
         >

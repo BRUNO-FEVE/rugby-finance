@@ -1,11 +1,11 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
-import { RugbyPayment } from "@prisma/client";
+import { Member } from "@prisma/client";
 
 export const getActivePaymentMembers = async () => {
   try {
-    const response: RugbyPayment[] = await prisma.rugbyPayment.findMany({
+    const response: Member[] = await prisma.member.findMany({
       where: { isPaying: true },
     });
 

@@ -13,7 +13,8 @@ export default async function Home() {
         <div className="h-1/5 w-full flex flex-col items-start justify-center pl-20">
           <h1 className="font-bold text-4xl">Mensalidades</h1>
           <p className="text-muted-foreground font-light">
-            Aqui estão as mensalidades dos membros ativos do Rugby Mauá!
+            Aqui estão as mensalidades dos membros que estão ativos como
+            <strong> pagantes</strong> do Rugby Mauá!
           </p>
         </div>
         <RugbyPaymentDataTable columns={rugbyPaymentColumns} data={response} />

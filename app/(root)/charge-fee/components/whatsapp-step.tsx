@@ -17,26 +17,26 @@ interface WhatsappStepProps {
 }
 
 export default function WhatsappStep({ nextStage }: WhatsappStepProps) {
-  const { membersInfo, membersToCharge } = useContext(MembersToChargeContext);
+  const { membersToCharge } = useContext(MembersToChargeContext);
   const [memberCount, setMemberCount] = useState<number>(0);
   const [progress, setProgress] = useState<number>(0);
 
   const PERCENTAGE_OF_ONE_MEMBER = 100 / membersToCharge.length;
 
-  const CURRENT_MEMBER = membersInfo[memberCount];
+  const CURRENT_MEMBER = membersToCharge[memberCount];
   const CURRENT_RUGBY_RECORD = membersToCharge.find(
-    (member) => member.memberId === CURRENT_MEMBER.id,
+    (member) => member.id === CURRENT_MEMBER.id,
   );
 
   let BASE_TEXT = "";
   let MOUNTHS = "";
 
   if (CURRENT_RUGBY_RECORD) {
-    MOUNTHS = getMonthsToPay(CURRENT_RUGBY_RECORD.monthsPayment);
+    MOUNTHS = getMonthsToPay(CURRENT_RUGBY_RECORD.paymentRecord);
 
     BASE_TEXT = getBaseText({
       nickname: CURRENT_MEMBER.nickname,
-      monthsToPay: getMonthsToPay(CURRENT_RUGBY_RECORD.monthsPayment),
+      monthsToPay: getMonthsToPay(CURRENT_RUGBY_RECORD.paymentRecord),
     });
   }
 

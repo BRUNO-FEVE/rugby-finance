@@ -9,7 +9,6 @@ import { Input } from "@/components/ui/input";
 import { useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { updatePaymentRecord } from "@/actions/update-payment-records";
-import { useRouter } from "next/navigation";
 import {
   Form,
   FormControl,
@@ -98,7 +97,6 @@ export default function AddPaymentForm({
   closeDrawer,
 }: AddPaymentFormProps) {
   const [isPeding, startTransition] = useTransition();
-  const router = useRouter();
 
   const form = useForm<z.infer<typeof AddPaymentFormSchema>>({
     resolver: zodResolver(AddPaymentFormSchema),

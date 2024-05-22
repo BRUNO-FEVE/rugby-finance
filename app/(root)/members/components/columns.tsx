@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { formatPhoneNumber } from "@/lib/utils";
 import { Member } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, Cog, Pencil, SquarePen } from "lucide-react";
+import { UpdatePaymentStatusDialog } from "./update-payment-status-dialog";
 
 export const membersColumns: ColumnDef<Member>[] = [
   {
@@ -48,6 +49,17 @@ export const membersColumns: ColumnDef<Member>[] = [
     },
   },
   {
+    accessorKey: "isPaying",
+    header: "",
+    cell: ({ row }) => {
+      return (
+        <div className="w-full flex justify-center">
+          <UpdatePaymentStatusDialog member={row.original} />
+        </div>
+      );
+    },
+  },
+  {
     accessorKey: "yearOfJoinOnRugbyMaua",
     header: "",
     getGroupingValue: ({ yearOfJoinOnRugbyMaua }) => {
@@ -59,8 +71,7 @@ export const membersColumns: ColumnDef<Member>[] = [
         row.original.yearOfJoinOnRugbyMaua > new Date().getFullYear() - 1;
 
       return (
-        <div className="flex flex-row gap-2">
-          <Tag label={row.original.isPaying ? "PAGANTE" : "NÃO PAGANTE"} />
+        <div className="w-full flex justify-center">
           <Tag label={IS_BIXO ? "BIXO" : "VETERANO"} />
         </div>
       );

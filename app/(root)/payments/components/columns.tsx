@@ -1,6 +1,5 @@
 "use client";
 
-import { getMemberById } from "@/actions/get-member-by-id";
 import { Tag } from "@/components/tags";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/utils";

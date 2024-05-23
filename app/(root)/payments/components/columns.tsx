@@ -24,13 +24,13 @@ export const paymentsColumns: ColumnDef<Payment>[] = [
         </div>
       );
     },
-    cell: async ({ row }) => {
+    cell: ({ row }) => {
       return <p>{row.original.memberName}</p>;
     },
   },
   {
     accessorKey: "value",
-    header: ({}) => <p className="text-center">Valor</p>,
+    header: () => <p className="text-center">Valor</p>,
     cell: ({ row }) => {
       return <p className="text-center">R$: {row.original.value.toString()}</p>;
     },

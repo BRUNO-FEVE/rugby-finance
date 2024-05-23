@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, CheckCircle2, ChevronsUpDown } from "lucide-react";
 import * as z from "zod";
 import {
   Select,
@@ -58,7 +58,7 @@ const CreatePaymentFormSchema = z.object({
 
 export default function PaymentForm() {
   const [comboboxOpen, setComboboxOpen] = useState<boolean>(false);
-  const [requesStatus, setRequestStatus] = useState<
+  const [requestStatus, setRequestStatus] = useState<
     "sleeping" | "wating" | "complete"
   >("sleeping");
   const [members, setMembers] = useState<Member[]>([]);
@@ -67,7 +67,6 @@ export default function PaymentForm() {
   });
 
   const onSubmit = async (data: z.infer<typeof CreatePaymentFormSchema>) => {
-    console.log(data);
     setRequestStatus("wating");
 
     await createPayment(data);
@@ -84,8 +83,16 @@ export default function PaymentForm() {
     getMembers();
   }, []);
 
+  useEffect(() => {
+    if (requestStatus === "complete") {
+      setTimeout(() => {
+        setRequestStatus("sleeping");
+      }, 2000); // 3 sec
+    }
+  }, [requestStatus]);
+
   return (
-    <Card className="w-4/12 h-full">
+    <Card className="w-4/12 h-fit">
       <CardHeader>
         <CardTitle>Adicionar Pagamento</CardTitle>
         <CardDescription>
@@ -244,8 +251,15 @@ export default function PaymentForm() {
                 );
               }}
             />
-            <Button type="submit" disabled={requesStatus === "wating"}>
+            <Button
+              type="submit"
+              disabled={requestStatus !== "sleeping"}
+              className={`flex flex-row gap-2 ${requestStatus === "complete" ? "bg-green-400 hover:bg-green-400" : null}`}
+            >
               Adicionar
+              {requestStatus === "complete" ? (
+                <CheckCircle2 className="h-4 w-4" />
+              ) : null}
             </Button>
           </form>
         </Form>

@@ -3,7 +3,6 @@
 import { getAllPayments } from "@/actions/get-all-payments";
 import PaymentsDataTable from "./components/data-table";
 import { paymentsColumns } from "./components/columns";
-import { Payment } from "@prisma/client";
 import PaymentForm from "./components/payment-form";
 
 export default async function PaymentsPage() {

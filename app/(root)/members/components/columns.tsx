@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { formatPhoneNumber } from "@/lib/utils";
 import { Member } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Cog, Pencil, SquarePen } from "lucide-react";
+import { ArrowUpDown } from "lucide-react";
 import { UpdatePaymentStatusDialog } from "./update-payment-status-dialog";
 
 export const membersColumns: ColumnDef<Member>[] = [

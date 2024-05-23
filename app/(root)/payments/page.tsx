@@ -9,17 +9,6 @@ import PaymentForm from "./components/payment-form";
 export default async function PaymentsPage() {
   const payments = await getAllPayments();
 
-  // const payments: Payment[] = [
-  //   {
-  //     id: "1",
-  //     memberId: "1234414141",
-  //     value: 100,
-  //     date: new Date(),
-  //     type: "pix",
-  //     cause: "mensalidade",
-  //   },
-  // ];
-
   if (payments) {
     return (
       <div className="w-full h-full flex flex-col gap-10 p-10">

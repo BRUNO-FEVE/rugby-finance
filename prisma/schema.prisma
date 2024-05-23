@@ -74,7 +74,7 @@ model Payment {
   date        DateTime @unique @default(now())
   value       Float
   cause       String
-  type        String
+  type        String?
 
   member Member @relation(fields: [memberId, memberName], references: [id, name], onDelete: Cascade)
 

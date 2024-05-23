@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/utils";
 import { Payment } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowUpDown, Calendar, ClipboardEditIcon } from "lucide-react";
+import { ArrowUpDown, Calendar, Trash2 } from "lucide-react";
+import DeletePaymentAlert from "./delete-payment-alert";
 
 export const paymentsColumns: ColumnDef<Payment>[] = [
   {
@@ -62,15 +63,8 @@ export const paymentsColumns: ColumnDef<Payment>[] = [
   {
     accessorKey: "update",
     header: "",
-    cell: ({}) => {
-      return (
-        <Button
-          variant={"ghost"}
-          className="text-muted-foreground hover:text-primary"
-        >
-          <ClipboardEditIcon className="w-4 h-4 " />
-        </Button>
-      );
+    cell: ({ row }) => {
+      return <DeletePaymentAlert paymentId={row.original.id} />;
     },
   },
 ];

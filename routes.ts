@@ -29,3 +29,10 @@ export const apiAuthPrefix: string = "/api";
  */
 
 export const DEFAULT_LOGIN_REDIRECT: string = "/rugby-payment";
+
+/**
+ * The default redirect path after signing out
+ * @type {string}
+ */
+
+export const DEFAULT_SIGNOUT_REDIRECT: string = "/sign-in";

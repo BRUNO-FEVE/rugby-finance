@@ -46,9 +46,15 @@ export default function Navbar({ name, email }: NavbarProps) {
   const pathName = usePathname();
 
   const handleLogOut = async () => {
-    await deleteCookie("authjs.callback-url");
-    await deleteCookie("authjs.csrf-token");
-    await deleteCookie("authjs.session-token");
+    //PROD
+    await deleteCookie("__Host-authjs.csrf-token");
+    await deleteCookie("__Secure-authjs.callback-url");
+    await deleteCookie("__Secure-authjs.session-token");
+
+    // DEV
+    // await deleteCookie("authjs.callback-url");
+    // await deleteCookie("authjs.csrf-token");
+    // await deleteCookie("authjs.session-token");
 
     window.location.href = "/sign-in";
   };

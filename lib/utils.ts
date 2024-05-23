@@ -149,3 +149,14 @@ Após o pagamento, por gentileza, envie o comprovante para um dos membros da com
 Contamos com você! 😊🏉
 `;
 }
+
+export function formatDate(date: Date) {
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear().toString().slice(-2);
+
+  const dayString = day < 10 ? "0" + day : day;
+  const monthString = month < 10 ? "0" + month : month;
+
+  return `${dayString}/${monthString}/${year}`;
+}

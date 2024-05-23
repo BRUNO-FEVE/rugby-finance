@@ -18,6 +18,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { createPayment } from "@/actions/create-payment";
+import { getNumberArray, getTotal } from "@/lib/utils";
 
 export interface monthsProps {
   type:
@@ -118,7 +120,19 @@ export default function AddPaymentForm({
 
   function onSubmit(values: z.infer<typeof AddPaymentFormSchema>) {
     startTransition(async () => {
+      const oldTotalPaymentRecord = getTotal(member.paymentRecord);
+
       await updatePaymentRecord({ memberId: member.id, values });
+
+      if (oldTotalPaymentRecord < getTotal(getNumberArray(values))) {
+        await createPayment({
+          memberId: member.id,
+          memberName: member.name,
+          cause: "Mensalidade",
+          value: getTotal(getNumberArray(values)),
+        });
+      }
+
       closeDrawer();
       window.location.reload();
     });

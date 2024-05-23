@@ -3,10 +3,10 @@
 import { ItensProps } from "./ui/combobox";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { deleteCookie } from "@/actions/delete-cookie";
+import { signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { Landmark, Laptop2Icon, Moon, Sun } from "lucide-react";
 import { usePathname } from "next/navigation";
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,6 +20,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import Link from "next/link";
+import { DEFAULT_SIGNOUT_REDIRECT } from "@/routes";
 
 const teams: ItensProps[] = [
   {
@@ -45,19 +46,19 @@ export default function Navbar({ name, email }: NavbarProps) {
   const { setTheme } = useTheme();
   const pathName = usePathname();
 
-  const handleLogOut = async () => {
-    //PROD
-    await deleteCookie("__Host-authjs.csrf-token");
-    await deleteCookie("__Secure-authjs.callback-url");
-    await deleteCookie("__Secure-authjs.session-token");
+  // const handleLogOut = async () => {
+  //   //PROD
+  //   // await deleteCookie("__Host-authjs.csrf-token");
+  //   // await deleteCookie("__Secure-authjs.callback-url");
+  //   // await deleteCookie("__Secure-authjs.session-token");
+  //   signOut({ redirect: true, callbackUrl: DEFAULT_SIGNOUT_REDIRECT });
+  //   // DEV
+  //   // await deleteCookie("authjs.callback-url");
+  //   // await deleteCookie("authjs.csrf-token");
+  //   // await deleteCookie("authjs.session-token");
 
-    // DEV
-    // await deleteCookie("authjs.callback-url");
-    // await deleteCookie("authjs.csrf-token");
-    // await deleteCookie("authjs.session-token");
-
-    window.location.href = "/sign-in";
-  };
+  //   // window.location.href = "/sign-in";
+  // };
 
   return (
     <div className="w-full py-3 px-5 border-b border-muted flex flex-row justify-between items-center">
@@ -102,7 +103,7 @@ export default function Navbar({ name, email }: NavbarProps) {
             <span className="text-muted-foreground text-xs">{email}</span>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Perfil</DropdownMenuItem>
+          {/* <DropdownMenuItem>Perfil</DropdownMenuItem> */}
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
               <span>Tema</span>
@@ -137,7 +138,7 @@ export default function Navbar({ name, email }: NavbarProps) {
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
-          <DropdownMenuItem onClick={handleLogOut}>Log Out</DropdownMenuItem>
+          {/* <DropdownMenuItem onClick={handleLogOut}>Log Out</DropdownMenuItem> */}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

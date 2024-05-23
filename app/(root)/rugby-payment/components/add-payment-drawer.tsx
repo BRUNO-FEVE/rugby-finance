@@ -47,7 +47,7 @@ export default function AddPaymentDrawer({ member }: AddPaymentDrawerProps) {
 
   if (member) {
     return (
-      <Drawer open={isOpen}>
+      <Drawer open={isOpen} onOpenChange={setOpen}>
         <DrawerTrigger asChild>
           <Button
             variant={"ghost"}

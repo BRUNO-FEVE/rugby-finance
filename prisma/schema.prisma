@@ -64,18 +64,19 @@ model Member {
   Payments              Payment[]
 
   @@map("members")
-  @@unique([id, name, nickname])
+  @@unique([id, name])
 }
 
 model Payment {
-  id       String   @unique @default(uuid())
-  memberId String   
-  date     DateTime @unique @default(now())
-  value    Int
-  cause    String
-  type     String?
+  id          String   @unique @default(uuid())
+  memberName  String   
+  memberId    String   
+  date        DateTime @unique @default(now())
+  value       Float
+  cause       String
+  type        String
 
-  member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  member Member @relation(fields: [memberId, memberName], references: [id, name], onDelete: Cascade)
 
   @@map("payments")
 }

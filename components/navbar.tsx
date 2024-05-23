@@ -1,11 +1,10 @@
 "use client";
 
-import { Combobox, ItensProps } from "./ui/combobox";
+import { ItensProps } from "./ui/combobox";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { deleteCookie } from "@/actions/delete-cookie";
 import { useTheme } from "next-themes";
 import { Landmark, Laptop2Icon, Moon, Sun } from "lucide-react";
-import { Button } from "./ui/button";
 import { usePathname } from "next/navigation";
 
 import {
@@ -64,21 +63,21 @@ export default function Navbar({ name, email }: NavbarProps) {
         </h1>
         <Link
           href={"/rugby-payment"}
-          className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground 
+          className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground
             ${pathName === "/rugby-payment" ? undefined : "text-muted-foreground"}`}
         >
           Mensalidades
         </Link>
         <Link
           href={"/members"}
-          className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground 
+          className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground
             ${pathName === "/members" ? undefined : "text-muted-foreground"}`}
         >
           Membros
         </Link>
         <Link
           href={"/payments"}
-          className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground 
+          className={`inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:text-accent-foreground
             ${pathName === "/payments" ? undefined : "text-muted-foreground"}`}
         >
           Pagamentos

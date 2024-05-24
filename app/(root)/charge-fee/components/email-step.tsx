@@ -5,6 +5,7 @@ import { MembersToChargeContext } from "../../members-to-charge-context";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Send } from "lucide-react";
 import { chargeWithEmail } from "@/actions/charge-with-email";
+import { useToast } from "@/components/ui/use-toast";
 
 interface EmailStepProps {
   nextStage: () => void;
@@ -16,6 +17,7 @@ export default function EmailStep({ nextStage }: EmailStepProps) {
   const [sedingStage, setSendingStage] = useState<
     "wating" | "sending" | "completed"
   >("wating");
+  const { toast } = useToast();
 
   const sendEmails = async () => {
     setSendingStage("sending");
@@ -25,6 +27,12 @@ export default function EmailStep({ nextStage }: EmailStepProps) {
     // });
 
     setSendingStage("completed");
+
+    toast({
+      title: "Cobrança por Email Concluída!",
+      description:
+        "Os emails foram enviados aos respectivos membros com sucesso.",
+    });
   };
 
   useEffect(() => {
@@ -38,7 +46,9 @@ export default function EmailStep({ nextStage }: EmailStepProps) {
       setTimeout(() => {
         setButton(
           <Button
-            className="fixed bottom-10 right-32 text-md gap-3"
+            variant={"default"}
+            size={"lg"}
+            className="text-md gap-3"
             onClick={nextStage}
           >
             Proxima Etapa
@@ -60,7 +70,7 @@ export default function EmailStep({ nextStage }: EmailStepProps) {
   }, []);
 
   return (
-    <div className="w-7/12 h-fit pb-32 flex flex-col gap-2">
+    <div className="w-7/12 h-fit pb-32 flex flex-col gap-5">
       <h1 className="font-bold text-2xl">
         <span className="text-muted-foreground">Etapa 1:</span> Enviar Email
       </h1>
@@ -129,7 +139,7 @@ const SendEmailButton = ({
     <Button
       variant={"default"}
       size={"lg"}
-      className={`fixed bottom-10 right-32 text-md gap-3 ${sedingStage === "completed" ? "bg-green-400 hover:bg-green-400" : null}`}
+      className={`text-md gap-3 ${sedingStage === "completed" ? "bg-green-400 hover:bg-green-400" : null}`}
       onClick={sendEmailsFunction}
     >
       {handleChargeButtonText(sedingStage)}

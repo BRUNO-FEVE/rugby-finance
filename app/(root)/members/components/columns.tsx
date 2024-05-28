@@ -8,6 +8,7 @@ import { Member } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { UpdatePaymentStatusDialog } from "./update-payment-status-dialog";
+import MemberInfoDialog from "./member-info-dialog";
 
 export const membersColumns: ColumnDef<Member>[] = [
   {
@@ -92,6 +93,13 @@ export const membersColumns: ColumnDef<Member>[] = [
     header: "Telefone",
     cell: ({ row }) => {
       return <p>{formatPhoneNumber(row.original.phoneNumber)}</p>;
+    },
+  },
+  {
+    accessorKey: "more-info",
+    header: "",
+    cell: ({ row }) => {
+      return <MemberInfoDialog member={row.original} />;
     },
   },
 ];

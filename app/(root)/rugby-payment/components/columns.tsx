@@ -40,7 +40,7 @@ export const rugbyPaymentColumns: ColumnDef<Member>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "memberName",
+    accessorKey: "name",
     header: ({ column }) => {
       return (
         <div className="pl-5">

@@ -47,6 +47,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
 import { createPayment } from "@/actions/create-payment";
+import { useToast } from "@/components/ui/use-toast";
 
 const CreatePaymentFormSchema = z.object({
   memberId: z.string(),
@@ -65,6 +66,7 @@ export default function PaymentForm() {
   const form = useForm<z.infer<typeof CreatePaymentFormSchema>>({
     resolver: zodResolver(CreatePaymentFormSchema),
   });
+  const { toast } = useToast();
 
   const onSubmit = async (data: z.infer<typeof CreatePaymentFormSchema>) => {
     setRequestStatus("wating");
@@ -72,6 +74,15 @@ export default function PaymentForm() {
     await createPayment(data);
 
     setRequestStatus("complete");
+
+    toast({
+      title: "Pagamento Efetuado com Sucesso!",
+      description: "O registro do pagamento foi concluído com sucesso.",
+    });
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000); // 2 sec
   };
 
   const getMembers = async () => {

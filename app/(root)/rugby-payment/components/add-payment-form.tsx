@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/form";
 import { createPayment } from "@/actions/create-payment";
 import { getNumberArray, getTotal } from "@/lib/utils";
+import { useToast } from "@/components/ui/use-toast";
 
 export interface monthsProps {
   type:
@@ -99,6 +100,7 @@ export default function AddPaymentForm({
   closeDrawer,
 }: AddPaymentFormProps) {
   const [isPeding, startTransition] = useTransition();
+  const { toast } = useToast();
 
   const form = useForm<z.infer<typeof AddPaymentFormSchema>>({
     resolver: zodResolver(AddPaymentFormSchema),
@@ -124,7 +126,10 @@ export default function AddPaymentForm({
 
       await updatePaymentRecord({ memberId: member.id, values });
 
-      if (oldTotalPaymentRecord < getTotal(getNumberArray(values))) {
+      const IS_ADDING =
+        oldTotalPaymentRecord < getTotal(getNumberArray(values));
+
+      if (IS_ADDING) {
         await createPayment({
           memberId: member.id,
           memberName: member.name,
@@ -134,7 +139,17 @@ export default function AddPaymentForm({
       }
 
       closeDrawer();
-      window.location.reload();
+
+      toast({
+        title: "Mensalidade Atualizada com Sucesso!",
+        description: IS_ADDING
+          ? "O pagamento foi registrado e vinculado a esta alteração."
+          : "A alteração foi registrada.",
+      });
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000); // 2 sec
     });
   }
 

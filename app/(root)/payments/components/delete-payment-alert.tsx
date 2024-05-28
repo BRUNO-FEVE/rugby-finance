@@ -11,7 +11,9 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
 import { Trash2 } from "lucide-react";
+import { useState } from "react";
 
 interface DeletePaymentAlertProps {
   paymentId: string;
@@ -20,13 +22,26 @@ interface DeletePaymentAlertProps {
 export default function DeletePaymentAlert({
   paymentId,
 }: DeletePaymentAlertProps) {
+  const [open, setOpen] = useState<boolean>(false);
+  const { toast } = useToast();
+
   const handleDeletePayment = async () => {
     await deletePayment({ paymentId });
-    window.location.reload();
+
+    setOpen(false);
+
+    toast({
+      title: "Pagamento Removido com Sucesso!",
+      description: "O pagamento foi excluído da base de dados.",
+    });
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000); // 2 sec
   };
 
   return (
-    <AlertDialog>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
         <Button
           variant={"ghost"}

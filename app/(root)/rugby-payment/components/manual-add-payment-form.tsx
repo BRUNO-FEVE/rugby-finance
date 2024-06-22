@@ -39,7 +39,7 @@ export interface monthsProps {
   name: string;
 }
 
-const months: monthsProps[] = [
+export const months: monthsProps[] = [
   {
     type: "jan",
     name: "Janeiro",
@@ -157,9 +157,9 @@ export default function AddPaymentForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col items-end h-full justify-between"
+        className="flex flex-col items-end h-full justify-between gap-0.5"
       >
-        <div className="grid grid-cols-6 py-10 px-7 gap-10 h-full">
+        <div className="grid grid-cols-6 py-5 gap-10 h-full">
           {months.map((month, index) => {
             return (
               <FormField

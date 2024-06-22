@@ -30,6 +30,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import ManualAddPaymentForm from "./manual-add-payment-form";
 import AutoAddPaymentForm from "./auto-add-payment-form";
+import AutoPaymentInfoDialog from "./auto-payment-info-dialog";
 
 interface AddPaymentDrawerProps {
   member: Member;
@@ -133,9 +134,7 @@ export default function AddPaymentDrawer({ member }: AddPaymentDrawerProps) {
               <TabsList className="relative">
                 <TabsTrigger value="auto">Automatico</TabsTrigger>
                 <TabsTrigger value="manual">Manual</TabsTrigger>
-                <Button variant={"ghost"} className="absolute -right-14">
-                  <Info className="w-4 h-4" />
-                </Button>
+                <AutoPaymentInfoDialog />
               </TabsList>
               <TabsContent value="auto" className="h-full">
                 <AutoAddPaymentForm member={member} />

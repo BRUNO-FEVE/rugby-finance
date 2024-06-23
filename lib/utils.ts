@@ -106,6 +106,31 @@ export function getNumberArray(values: z.infer<typeof AddPaymentFormSchema>) {
   ];
 }
 
+export function getIndexMonthsToPay(paymentRecord: number[]): number[] {
+  const initialPaymentRecordIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  if (paymentRecord.toString() === "0,0,0,0,0,0,0,0,0,0,0,0") {
+    return initialPaymentRecordIndexes;
+  }
+
+  let months: number[] = [];
+
+  const paidMonthsIndices = paymentRecord
+    .map((value, index) => (value > 0 ? index : -1))
+    .filter((index) => index !== -1)
+    .sort((a, b) => a - b);
+
+  const beforePaidMonths = initialPaymentRecordIndexes.slice(
+    0,
+    paidMonthsIndices[0],
+  );
+  const afterPaidMonths = initialPaymentRecordIndexes.slice(
+    paidMonthsIndices[paidMonthsIndices.length - 1] + 1,
+    paymentRecord.length,
+  );
+
+  return afterPaidMonths.concat(beforePaidMonths);
+}
+
 export function getMonthsToPay(paymentRecord: number[]): string {
   let months = "";
 

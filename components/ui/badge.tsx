@@ -36,11 +36,13 @@ function Badge({ className, variant, title, content, ...props }: BadgeProps) {
     return (
       <Badge
         variant={"secondary"}
-        className={cn(badgeVariants({ variant }), className)}
+        className={cn(badgeVariants({ variant }))}
         {...props}
       >
         {title}
-        <Badge variant={"default"}>{content}</Badge>
+        <Badge variant={"default"} className={className}>
+          {content}
+        </Badge>
       </Badge>
     );
   }

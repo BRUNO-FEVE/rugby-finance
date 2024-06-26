@@ -17,7 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
+import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -29,6 +29,7 @@ import {
 } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import "../../../globals.css";
 
 interface AutoAddPaymentFormProps {
   member: Member;
@@ -76,7 +77,7 @@ export default function AutoAddPaymentForm({
                 variant={"double"}
                 title={getAbbreviatedMonth(index)}
                 content={`R$ ${month}`}
-                className={`${month > 0 ? "bg-green-500 hover:bg-green-600" : null} ${futureMonthsToPay.includes(index) ? "bg-blue-700" : null}`}
+                className={`duration-300 delay-150 transition-transform ${month > 0 ? "bg-green-500 hover:bg-green-600" : null} ${futureMonthsToPay.includes(index) ? "bg-blue-700 hover:bg-blue-800 animate-impact" : null}`}
               />
             );
           })}

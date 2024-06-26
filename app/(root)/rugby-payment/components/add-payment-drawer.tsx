@@ -8,7 +8,6 @@ import { getNameInitials } from "@/lib/utils";
 import { Tag } from "@/components/tags";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Info } from "lucide-react";
 import {
   Drawer,
   DrawerClose,
@@ -137,7 +136,7 @@ export default function AddPaymentDrawer({ member }: AddPaymentDrawerProps) {
               <Separator />
               <Tabs defaultValue={"auto"} className="h-full w-full py-6 px-8">
                 <TabsList className="relative">
-                  <TabsTrigger value="auto">Automatico</TabsTrigger>
+                  <TabsTrigger value="auto">Automático</TabsTrigger>
                   <TabsTrigger value="manual">Manual</TabsTrigger>
                   <AutoPaymentInfoDialog />
                 </TabsList>

@@ -3,6 +3,18 @@
 
 // async function main() {
 //   await prisma.user.deleteMany();
+
+//   admData.map(async (adm) => {
+//     await prisma.user.create({
+//       data: {
+//         name: adm.name,
+//         email: adm.email,
+//         password: adm.password,
+//         emailVerified: adm.emailVerified,
+//         image: adm.image,
+//       },
+//     });
+//   });
 // }
 
 // main()

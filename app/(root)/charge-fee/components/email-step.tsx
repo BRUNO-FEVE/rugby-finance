@@ -88,7 +88,7 @@ export default function EmailStep({ nextStage }: EmailStepProps) {
                 className="h-10 w-full flex items-center justify-between gap-10 text-sm border-b border-muted px-5"
               >
                 <p>{member.name}</p>
-                <p>{member.email}</p>
+                <p>{member.phoneNumber.toString()}</p>
                 <p>{sedingStage === "completed" ? "✅" : "🚫"}</p>
               </div>
             );

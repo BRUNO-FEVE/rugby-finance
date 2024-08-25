@@ -1,14 +1,13 @@
 "use client";
 
-import { getMemberById } from "@/actions/get-member-by-id";
 import { Button } from "@/components/ui/button";
 import { ClipboardEditIcon, Coins } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Member } from "@prisma/client";
-import { formatPhoneNumber, getMonths, getNameInitials } from "@/lib/utils";
+import { getNameInitials } from "@/lib/utils";
 import { Tag } from "@/components/tags";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Drawer,
   DrawerClose,
@@ -28,7 +27,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import AddPaymentForm from "./add-payment-form";
+import ManualAddPaymentForm from "./manual-add-payment-form";
+import AutoAddPaymentForm from "./auto-add-payment-form";
+import AutoPaymentInfoDialog from "./payment-modes-info-dialog";
 
 interface AddPaymentDrawerProps {
   member: Member;
@@ -120,7 +121,7 @@ export default function AddPaymentDrawer({ member }: AddPaymentDrawerProps) {
                 </CardFooter>
               </Card>
             </div>
-            <div className="w-full h-full flex flex-col justify-start">
+            <div className="w-full h-full flex flex-col items-start justify-start gap-4">
               <DrawerHeader>
                 <DrawerTitle className="pb-0 h-fit">
                   Adicionar Pagamento de Mesalidade
@@ -133,7 +134,25 @@ export default function AddPaymentDrawer({ member }: AddPaymentDrawerProps) {
                 </DrawerDescription>
               </DrawerHeader>
               <Separator />
-              <AddPaymentForm member={member} closeDrawer={closeDrawer} />
+              <Tabs defaultValue={"auto"} className="h-full w-full py-6 px-8">
+                <TabsList className="relative">
+                  <TabsTrigger value="auto">Automático</TabsTrigger>
+                  <TabsTrigger value="manual">Manual</TabsTrigger>
+                  <AutoPaymentInfoDialog />
+                </TabsList>
+                <TabsContent value="auto" className="h-full">
+                  <AutoAddPaymentForm
+                    member={member}
+                    closeDrawer={closeDrawer}
+                  />
+                </TabsContent>
+                <TabsContent value="manual" className="h-full">
+                  <ManualAddPaymentForm
+                    member={member}
+                    closeDrawer={closeDrawer}
+                  />
+                </TabsContent>
+              </Tabs>
             </div>
           </div>
         </DrawerContent>

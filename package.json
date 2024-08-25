@@ -11,7 +11,8 @@
     "lint:fix": "prettier --write .",
     "test": "jest",
     "prisma:seed:adm": "tsx ./prisma/seed-adm",
-    "prisma:seed:member": "tsx ./prisma/seed-member"
+    "prisma:seed:member": "tsx ./prisma/seed-member",
+    "prisma:seed:members-to-pay": "tsx ./prisma/get-members-to-pay"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.0.0",

@@ -141,7 +141,10 @@ export default function AddPaymentDrawer({ member }: AddPaymentDrawerProps) {
                   <AutoPaymentInfoDialog />
                 </TabsList>
                 <TabsContent value="auto" className="h-full">
-                  <AutoAddPaymentForm member={member} />
+                  <AutoAddPaymentForm
+                    member={member}
+                    closeDrawer={closeDrawer}
+                  />
                 </TabsContent>
                 <TabsContent value="manual" className="h-full">
                   <ManualAddPaymentForm

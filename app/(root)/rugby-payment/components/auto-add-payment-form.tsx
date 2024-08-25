@@ -28,40 +28,103 @@ import {
   getMonthsToPay,
 } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "../../../globals.css";
+import { updatePaymentRecord } from "@/actions/update-payment-records";
+import { toast } from "@/components/ui/use-toast";
+import { createPayment } from "@/actions/create-payment";
 
 interface AutoAddPaymentFormProps {
   member: Member;
+  closeDrawer: () => void;
 }
 
 const autoAddPaymentFormSchema = z.object({
-  total: z.number().positive(),
-  monthsPaid: z.number().positive().min(1).max(12),
+  total: z.string(),
+  monthsPaid: z.string(),
 });
 
 export default function AutoAddPaymentForm({
   member,
+  closeDrawer,
 }: AutoAddPaymentFormProps) {
+  const [isFixedNumbersMode, setIsFixedNumbersMode] = useState<boolean>(true);
   const [futureMonthsToPay, setFutureMonthsToPay] = useState<number[]>([]);
   const [monthsToPayInOrder, setMonthsToPayInOrder] = useState<number[]>([]);
+  const [recordUpdated, setRecordUpdated] = useState<number[]>(
+    member.paymentRecord,
+  );
   const MONTHS_TO_PAY = getMonthsToPay(member.paymentRecord).split(" ");
 
   const form = useForm<z.infer<typeof autoAddPaymentFormSchema>>({
     resolver: zodResolver(autoAddPaymentFormSchema),
     defaultValues: {
-      total: 0,
-      monthsPaid: 0,
+      total: "0",
+      monthsPaid: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof autoAddPaymentFormSchema>) {
-    console.log(values);
-  }
+  const paymentRecordUpdated: number[] = useMemo(() => {
+    const paymentRecordUpdatedResponse: number[] = [...member.paymentRecord];
+
+    const paymentPerMonth = Number(
+      (
+        parseFloat(form.getValues().total) /
+        parseInt(form.getValues().monthsPaid)
+      ).toFixed(2),
+    );
+
+    for (let i = 0; i < parseInt(form.getValues().monthsPaid); i++) {
+      paymentRecordUpdatedResponse[monthsToPayInOrder[i]] = paymentPerMonth;
+    }
+
+    setRecordUpdated(paymentRecordUpdatedResponse);
+    return paymentRecordUpdatedResponse;
+  }, [form.getValues().total, form.getValues().monthsPaid]);
 
   useEffect(() => {
     setMonthsToPayInOrder(getIndexMonthsToPay(member.paymentRecord));
   }, []);
+
+  async function onSubmit(values: z.infer<typeof autoAddPaymentFormSchema>) {
+    const stringArray = paymentRecordUpdated.map((number) => number.toString());
+
+    await updatePaymentRecord({
+      memberId: member.id,
+      values: {
+        jan: stringArray[0],
+        fev: stringArray[1],
+        mar: stringArray[2],
+        abr: stringArray[3],
+        mai: stringArray[4],
+        jun: stringArray[5],
+        jul: stringArray[6],
+        ago: stringArray[7],
+        set: stringArray[8],
+        out: stringArray[9],
+        nov: stringArray[10],
+        dez: stringArray[11],
+      },
+    });
+
+    await createPayment({
+      memberId: member.id,
+      memberName: member.name,
+      cause: "Mensalidade",
+      value: parseFloat(values.total),
+    });
+
+    closeDrawer();
+
+    toast({
+      title: "Mensalidade Atualizada com Sucesso!",
+      description: "O pagamento foi registrado e vinculado a esta alteração.",
+    });
+
+    setTimeout(() => {
+      window.location.reload();
+    }, 2000); // 2 sec
+  }
 
   return (
     <div className="w-full h-full flex flex-col gap-7">
@@ -70,7 +133,7 @@ export default function AutoAddPaymentForm({
           <CardTitle className="text-base">Histórico de Pagamento</CardTitle>
         </CardHeader>
         <CardContent className="grid grid-cols-6 gap-3">
-          {member.paymentRecord.map((month, index) => {
+          {paymentRecordUpdated.map((month, index) => {
             return (
               <Badge
                 key={month + index}
@@ -88,25 +151,48 @@ export default function AutoAddPaymentForm({
           onSubmit={form.handleSubmit(onSubmit)}
           className="w-full flex flex-row justify-evenly items-end gap-6"
         >
-          <FormField
-            control={form.control}
-            name={"total"}
-            render={({ field }) => {
-              return (
-                <FormItem className="w-full">
-                  <FormLabel>Total</FormLabel>
-                  <FormControl>
-                    <Input
-                      className="w-full"
-                      placeholder="Insira o total"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              );
-            }}
-          />
+          {isFixedNumbersMode ? (
+            <FormField
+              control={form.control}
+              name={"total"}
+              render={({ field }) => {
+                return (
+                  <FormItem className="w-full">
+                    <FormLabel>Total</FormLabel>
+                    <FormControl>
+                      <Input
+                        className="w-full"
+                        placeholder="Insira o total"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                    {/* <ArrowLeftRight className="absolute -right-10 top-0 w-4 h-4 hover:bg-muted" /> */}
+                  </FormItem>
+                );
+              }}
+            />
+          ) : (
+            <FormField
+              control={form.control}
+              name={"total"}
+              render={({ field }) => {
+                return (
+                  <FormItem className="w-full">
+                    <FormLabel>Total</FormLabel>
+                    <FormControl>
+                      <Input
+                        className="w-full"
+                        placeholder="Insira o total"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
+            />
+          )}
           <FormField
             control={form.control}
             name={"monthsPaid"}
@@ -120,7 +206,7 @@ export default function AutoAddPaymentForm({
                       setFutureMonthsToPay(
                         monthsToPayInOrder.slice(
                           0,
-                          form.getValues().monthsPaid,
+                          parseInt(form.getValues().monthsPaid),
                         ),
                       );
                     }}

@@ -28,7 +28,7 @@ export function formatPhoneNumber(phoneNumber: BigInt): string {
   );
 }
 
-function getMonth(monthNumber: number): string {
+export function getMonth(monthNumber: number): string {
   switch (monthNumber) {
     case 0:
       return "Janeiro";
@@ -106,6 +106,31 @@ export function getNumberArray(values: z.infer<typeof AddPaymentFormSchema>) {
   ];
 }
 
+export function getIndexMonthsToPay(paymentRecord: number[]): number[] {
+  const initialPaymentRecordIndexes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+  if (paymentRecord.toString() === "0,0,0,0,0,0,0,0,0,0,0,0") {
+    return initialPaymentRecordIndexes;
+  }
+
+  let months: number[] = [];
+
+  const paidMonthsIndices = paymentRecord
+    .map((value, index) => (value > 0 ? index : -1))
+    .filter((index) => index !== -1)
+    .sort((a, b) => a - b);
+
+  const beforePaidMonths = initialPaymentRecordIndexes.slice(
+    0,
+    paidMonthsIndices[0],
+  );
+  const afterPaidMonths = initialPaymentRecordIndexes.slice(
+    paidMonthsIndices[paidMonthsIndices.length - 1] + 1,
+    paymentRecord.length,
+  );
+
+  return afterPaidMonths.concat(beforePaidMonths);
+}
+
 export function getMonthsToPay(paymentRecord: number[]): string {
   let months = "";
 
@@ -159,4 +184,35 @@ export function formatDate(date: Date) {
   const monthString = month < 10 ? "0" + month : month;
 
   return `${dayString}/${monthString}/${year}`;
+}
+
+export function getAbbreviatedMonth(monthNumber: number): string {
+  switch (monthNumber) {
+    case 0:
+      return "Jan";
+    case 1:
+      return "Fev";
+    case 2:
+      return "Mar";
+    case 3:
+      return "Abr";
+    case 4:
+      return "Mai";
+    case 5:
+      return "Jun";
+    case 6:
+      return "Jul";
+    case 7:
+      return "Ago";
+    case 8:
+      return "Set";
+    case 9:
+      return "Out";
+    case 10:
+      return "Nov";
+    case 11:
+      return "Dez";
+    default:
+      return "Mês inválido";
+  }
 }

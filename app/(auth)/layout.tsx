@@ -11,35 +11,37 @@ export default function AuthLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const { theme, setTheme } = useTheme();
   const [themeIcon, setThemeIcon] = useState<ReactNode>();
+  const [windowLocation, setWindowLocation] = useState<string>("");
 
   const handleTheme = () => {
-    if (theme === "dark") {
-      setTheme("light");
-    } else {
-      setTheme("dark");
-    }
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   useEffect(() => {
-    if (theme === "dark") {
-      setThemeIcon(<Sun />);
-    } else {
-      setThemeIcon(<Moon />);
-    }
+    setThemeIcon(theme === "dark" ? <Sun /> : <Moon />);
   }, [theme]);
 
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setWindowLocation(window.location.pathname);
+    }
+  }, []);
+
   return (
-    <main className="flex flex-row w-screen bg-background">
+    <main className="relative h-screen w-screen flex justify-end bg-background">
       <Button
         variant={"ghost"}
         className="absolute top-3 right-3"
         onClick={handleTheme}
       >
-        {/* Change to {nextTheme} */}
         {themeIcon}
       </Button>
       <SidePicture />
-      {children}
+      <div
+        className={`${windowLocation === "/member" ? "md:w-2/3" : "md:w-1/2"} h-screen`}
+      >
+        {children}
+      </div>
     </main>
   );
 }

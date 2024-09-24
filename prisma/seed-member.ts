@@ -2,7 +2,7 @@
 // import { memberJson } from "./seed-data/member-data";
 
 // async function main() {
-//   await prisma.member.deleteMany();
+//   // await prisma.member.deleteMany();
 
 //   const CURRENT_YEAR = new Date().getFullYear();
 

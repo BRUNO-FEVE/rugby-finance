@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,7 +10,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Table } from "@tanstack/react-table";
-import { PlusCircleIcon, Settings2 } from "lucide-react";
+import { PlusCircleIcon, UserPlus, Settings2 } from "lucide-react";
+import Link from "next/link";
 
 interface TableToolbarProps<TData> {
   table: Table<TData>;
@@ -68,6 +69,14 @@ export default function TableToolbar<TData>({
         </DropdownMenuContent>
       </DropdownMenu> */}
       </div>
+      <Link
+        href={"member"}
+        className={
+          buttonVariants({ variant: "default" }) + " flex flex-row gap-2"
+        }
+      >
+        <UserPlus className="w-5 h-5" /> Adicinar Novo Membro
+      </Link>
       {/* <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button

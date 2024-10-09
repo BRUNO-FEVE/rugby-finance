@@ -61,6 +61,7 @@ model Member {
   uniformNumber         Int?       
   paymentRecord         Int[]         @default([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
   isPaying              Boolean       @default(true)   
+  onHold                Boolean       @default(true)   
   Payments              Payment[]
 
   @@map("members")

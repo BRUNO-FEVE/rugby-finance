@@ -3,11 +3,19 @@
 import { prisma } from "@/lib/prisma";
 import { Member } from "@prisma/client";
 
-export const getAllMembers = async () => {
-  try {
-    const response: Member[] = await prisma.member.findMany();
+interface GetAllMembersProps {
+  onHold: boolean;
+}
 
-    if (!response || response.length === 0) {
+export const getAllMembers = async ({ onHold }: GetAllMembersProps) => {
+  try {
+    const response: Member[] = await prisma.member.findMany({
+      where: {
+        onHold: onHold,
+      },
+    });
+
+    if (!response) {
       throw new Error("Error on get all members!");
     }
 

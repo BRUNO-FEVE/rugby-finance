@@ -9,6 +9,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { UpdatePaymentStatusDialog } from "./update-payment-status-dialog";
 import MemberInfoDialog from "./member-info-dialog";
+import DeleteMemberDialog from "./delete-member-alert";
 
 export const membersColumns: ColumnDef<Member>[] = [
   {
@@ -99,7 +100,12 @@ export const membersColumns: ColumnDef<Member>[] = [
     accessorKey: "more-info",
     header: "",
     cell: ({ row }) => {
-      return <MemberInfoDialog member={row.original} />;
+      return (
+        <>
+          <MemberInfoDialog member={row.original} />
+          <DeleteMemberDialog member={row.original} />
+        </>
+      );
     },
   },
 ];

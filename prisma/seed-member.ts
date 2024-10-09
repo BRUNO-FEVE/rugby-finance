@@ -1,8 +1,10 @@
 // import { prisma } from "@/lib/prisma";
 // import { memberJson } from "./seed-data/member-data";
 
+// import { prisma } from "@/lib/prisma";
+
 // async function main() {
-//   await prisma.member.deleteMany();
+//
 
 //   const CURRENT_YEAR = new Date().getFullYear();
 
@@ -30,6 +32,13 @@
 //         isPaying: member.yearOfGraduation >= CURRENT_YEAR,
 //       },
 //     });
+//   });
+// }
+
+// async function main() {
+//   await prisma.member.updateMany({
+//     where: { onHold: true },
+//     data: { onHold: false },
 //   });
 // }
 

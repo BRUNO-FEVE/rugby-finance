@@ -65,8 +65,8 @@ export const AddNewMemberFormSchema = z.object({
     .refine((val) => !val?.includes("@"), {
       message: "Instagram não deve conter o '@'",
     }),
-  readyLink: z.string().url("URL inválida."),
-  lawsLink: z.string().url("URL inválida."),
+  readyLink: z.string(),
+  lawsLink: z.string(),
   team: z.enum(["Masculino", "Feminino"], { message: "Time é Obrigatório." }),
   uniformSize: z.enum(["PP", "P", "M", "G", "GG"], {
     message: "Tamanho do Uniforme é Obrigatório.",

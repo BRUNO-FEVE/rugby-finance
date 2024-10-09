@@ -1,17 +1,11 @@
 "use client";
 
 import { Button, buttonVariants } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Table } from "@tanstack/react-table";
-import { PlusCircleIcon, UserPlus, Settings2 } from "lucide-react";
+import { UserPlus, Users } from "lucide-react";
 import Link from "next/link";
+import AproveMemberPopover from "./aprove-member-popover";
 
 interface TableToolbarProps<TData> {
   table: Table<TData>;
@@ -69,14 +63,18 @@ export default function TableToolbar<TData>({
         </DropdownMenuContent>
       </DropdownMenu> */}
       </div>
-      <Link
-        href={"member"}
-        className={
-          buttonVariants({ variant: "default" }) + " flex flex-row gap-2"
-        }
-      >
-        <UserPlus className="w-5 h-5" /> Adicinar Novo Membro
-      </Link>
+      <div className="flex items-center py-4 gap-4">
+        <AproveMemberPopover />
+        <Link
+          href={"member"}
+          className={
+            buttonVariants({ variant: "default" }) + " flex flex-row gap-2"
+          }
+        >
+          <UserPlus className="w-5 h-5" /> Adicinar Novo Membro
+          <p>{}</p>
+        </Link>
+      </div>
       {/* <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button

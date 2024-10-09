@@ -71,9 +71,5 @@ export const AddNewMemberFormSchema = z.object({
   uniformSize: z.enum(["PP", "P", "M", "G", "GG"], {
     message: "Tamanho do Uniforme é Obrigatório.",
   }),
-  uniformNumber: z
-    .string()
-    .min(1, "Número de uniforme é obrigatório.")
-    .regex(/^\d+$/, "Número de uniforme deve conter apenas números.")
-    .optional(),
+  uniformNumber: z.string().optional(),
 });

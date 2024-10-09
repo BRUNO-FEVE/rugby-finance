@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AtSign, InfoIcon } from "lucide-react";
 import { uploadFileOnDrive } from "@/actions/upload-file-on-drive";
 import { createMember } from "@/actions/create-member";
@@ -54,14 +54,22 @@ export default function AddMemberForm() {
       instagram: "",
       team: "Masculino",
       uniformSize: "M",
+      uniformNumber: "",
     },
   });
 
   async function onSubmit(data: z.infer<typeof AddNewMemberFormSchema>) {
     console.log(data);
 
-    // Upload Rugby Ready
+    // Handle optional fields
+    if (data.ra === "") {
+      form.setValue("ra", undefined);
+    }
+    if (data.uniformNumber === "") {
+      form.setValue("uniformNumber", undefined);
+    }
 
+    // Upload Rugby Ready
     if (readyFile) {
       setFormStatus("UPLOADING_READY");
       const response = await uploadFileOnDrive({
@@ -99,7 +107,10 @@ export default function AddMemberForm() {
       nickname: finalData.nickname,
       cpf: BigInt(finalData.cpf),
       rg: BigInt(finalData.rg),
-      educationInstituition: finalData.educationInstitution,
+      educationInstituition:
+        finalData.educationInstitution === "Outro"
+          ? otherEducationInstitution
+          : finalData.educationInstitution,
       ra: finalData.ra ? parseInt(finalData.ra, 10) : null,
       course: finalData.course,
       yearOfGraduation: parseInt(finalData.yearOfGraduation, 10),
@@ -241,9 +252,10 @@ export default function AddMemberForm() {
                       <Input
                         placeholder="Digite outra instituição de ensino..."
                         value={otherEducationInstitution}
-                        onChange={(e) =>
-                          setOtherEducationInstitution(e.target.value)
-                        }
+                        onChange={(e) => {
+                          form.setValue("ra", undefined);
+                          setOtherEducationInstitution(e.target.value);
+                        }}
                       />
                     )}
                   </RadioGroup>
@@ -585,7 +597,7 @@ export default function AddMemberForm() {
           />
         ) : null}
         <Button
-          disabled={formStatus !== "WAITING"}
+          disabled={formStatus !== "WAITING" && formStatus !== "ERROR"}
           type="submit"
           className={`w-full mt-10 ${
             formStatus === "WAITING"

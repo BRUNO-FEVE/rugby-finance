@@ -6,7 +6,7 @@ import { membersColumns } from "./components/columns";
 import MembersDataTable from "@/app/(root)/members/components/data-table";
 
 export default async function MembersPage() {
-  const response = await getAllMembers();
+  const response = await getAllMembers({ onHold: false });
   // const response: Member[] = [
   //   {
   //     id: "1",

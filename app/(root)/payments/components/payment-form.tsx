@@ -86,7 +86,7 @@ export default function PaymentForm() {
   };
 
   const getMembers = async () => {
-    const response = await getAllMembers();
+    const response = await getAllMembers({ onHold: false });
     setMembers(response);
   };
 
